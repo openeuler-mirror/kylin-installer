@@ -1,6 +1,6 @@
 /*
  *    rpm installer
- *    Copyright (c) KylinSoft  Co., Ltd. 2022. All rights reserved.
+ *    Copyright (c) KylinSoft  Co., Ltd. 2023. All rights reserved.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by

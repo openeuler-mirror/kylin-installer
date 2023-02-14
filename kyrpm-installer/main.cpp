@@ -1,6 +1,6 @@
 /*
  *    rpm installer
- *    Copyright (c) KylinSoft  Co., Ltd. 2022. All rights reserved.
+ *    Copyright (c) KylinSoft  Co., Ltd. 2023. All rights reserved.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QDebug>
 #include "RPMCommandWorker.h"
+#include "RpmDisplayDlg.h"
 
 int main(int argc, char *argv[])
 {
@@ -36,9 +37,10 @@ int main(int argc, char *argv[])
 
     
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-
+//    MainWindow w;
+//    w.show();
+    RpmDisplayDlg dlg;
+    dlg.show();
 
     qDebug()<<"++++++++++";
 

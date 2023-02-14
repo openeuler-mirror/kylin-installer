@@ -32,6 +32,7 @@
 
 #define KYRPM_YUMPATH "/usr/bin/yum"
 #define KYRPM_RPMBUILD	"rpm"
+#define TESTRPM "/Users/douyan/temp/kyrpm-installer/NetworkManager-1.32.12-14.oe2203sp1.src.rpm"
 
 enum Architecuture {
     x86_64 = 0,
@@ -76,22 +77,43 @@ enum Architecuture {
 //};
 
 //rpm info
-struct RPMinfo
+struct RPMInfo
 {
     QString packageName;
+    QString epoch;
     QString version;
     QString release;
-    QStringList licenses;
     Architecuture arch;
+    QString installDate;
+    QString group;
     int size;
+    QString licenses;
+    QString signature;
     QString source;
-    QString repository;
-    QString repo;
-    QString summary;
+    QString buildDate;
+    QString buildHost;
     QString url;
+    QString summary;
     QString description;
-    //todo requires
-    //todo provides
+
+    void clear() {
+        packageName="";
+        epoch="";
+        version="";
+        release="";
+        arch=unknown;
+        installDate="";
+        group="";
+        size=-1;
+        licenses="";
+        signature="";
+        source="";
+        buildDate="";
+        buildHost="";
+        url="";
+        summary="";
+        description="";
+    }
 };
 
 #endif // DATASTRUCTDEFINES_H
