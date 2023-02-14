@@ -15,38 +15,42 @@
  *    along with this program; if not, write to the Free Software
  *    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
+#ifndef GETRPMINFOBACKEND_H
+#define GETRPMINFOBACKEND_H
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#include <QObject>
+#include <DataStructDefines.h>
 
-#include <QMainWindow>
-#include <QProcess>
+class QProcess;
 
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
+//use command instead of rpm library
 
-class MainWindow : public QMainWindow
+class GetRPMInfoBackend : public QObject
 {
     Q_OBJECT
-
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    ~GetRPMInfoBackend();
+    static GetRPMInfoBackend* getInstance();
+
+signals:
+    void readRPMInfoFinished();
+    void readRPMInfoError();
 
 private slots:
-    void showInfoMessage(bool isShown);
-    void runCommand();
-    void processCommandResult();
-    bool dnfInstall(QString strPackageName);
-    bool dnfInstall();
+
+public:
+    bool getRPMInfoFromPackage(RPMinfo &info, QString strPath);
+    bool getRPMInfoFromPackage1(RPMinfo &info, QString strPath);
 
 private:
-    void initSignals();
+    explicit GetRPMInfoBackend(QObject *parent = nullptr);
 
-private:
-    Ui::MainWindow *ui;
-    QProcess *m_process;
+    static GetRPMInfoBackend* instance;
+
+    QProcess* m_process;
+
+
 };
-#endif // MAINWINDOW_H
+
+#endif // GETRPMINFOBACKEND_H
