@@ -19,13 +19,14 @@
 #include "GetRPMInfoBackend.h"
 #include <QProcess>
 #include <QDebug>
+#include "DataProcess.h"
 
 GetRPMInfoBackend * GetRPMInfoBackend::instance = nullptr;
 
 GetRPMInfoBackend::GetRPMInfoBackend(QObject *parent)
     : QObject{parent}
 {
-
+    m_process = new QProcess();
 }
 
 GetRPMInfoBackend::~GetRPMInfoBackend()
@@ -44,27 +45,27 @@ GetRPMInfoBackend *GetRPMInfoBackend::getInstance()
     return instance;
 }
 
-bool GetRPMInfoBackend::getRPMInfoFromPackage(RPMinfo &info, QString strPath)
+bool GetRPMInfoBackend::getRPMInfoFromPackage(RPMInfo &info, QString strPath)
 {
-    if(strPath.isEmpty())
+    if(strPath.isEmpty() || m_process == nullptr)
     {
         qDebug()<<"path is empty";
         return false;
     }
 
-    connect(m_process,&QProcess::readyReadStandardOutput,this,[=](){
+    connect(m_process,&QProcess::readyReadStandardOutput,this,[=, &info](){
         QString temp = m_process->readAllStandardOutput();
         qDebug()<<"read success! ";
-        qDebug()<<temp;
-        qDebug()<<"<<<<<<<<<<<<<<<<<";
+        DataProcess::QStringToRPMInfo(temp, info);
     });
     connect(m_process,&QProcess::readyReadStandardError,this, [=](){
         QString error = m_process->readAllStandardError();
         qDebug()<<"excute cmd error: " << error;
+
     });
 
     QStringList arguments;
-    arguments << "-qa";
+    arguments << "-qi" << TESTRPM;
 
     m_process->start(KYRPM_RPMPATH,arguments);
     //wait process start
@@ -78,7 +79,7 @@ bool GetRPMInfoBackend::getRPMInfoFromPackage(RPMinfo &info, QString strPath)
     return true;
 }
 
-bool GetRPMInfoBackend::getRPMInfoFromPackage1(RPMinfo &info, QString strPath)
+bool GetRPMInfoBackend::getRPMInfoFromPackage1(RPMInfo &info, QString strPath)
 {
 //    if(strPath.isEmpty())
 //    {
@@ -98,5 +99,4 @@ bool GetRPMInfoBackend::getRPMInfoFromPackage1(RPMinfo &info, QString strPath)
 
 //    QString result = process.readAllStandardOutput();
     return true;
-
 }

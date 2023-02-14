@@ -40,8 +40,8 @@ signals:
 private slots:
 
 public:
-    bool getRPMInfoFromPackage(RPMinfo &info, QString strPath);
-    bool getRPMInfoFromPackage1(RPMinfo &info, QString strPath);
+    bool getRPMInfoFromPackage(RPMInfo &info, QString strPath);
+    bool getRPMInfoFromPackage1(RPMInfo &info, QString strPath);
 
 private:
     explicit GetRPMInfoBackend(QObject *parent = nullptr);
