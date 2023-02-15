@@ -19,10 +19,13 @@
 #define RPMDISPLAYDLG_H
 
 #include <QDialog>
+#include <DataStructDefines.h>
 
 namespace Ui {
 class RpmDisplayDlg;
 }
+
+//local rpm package installer
 
 class RpmDisplayDlg : public QDialog
 {
@@ -32,8 +35,16 @@ public:
     explicit RpmDisplayDlg(QWidget *parent = nullptr);
     ~RpmDisplayDlg();
 
+private slots:
+    void slotFileChoose();
+
 private:
+    void initUI();
+    bool getRPMInfo(QString filePath);
+
     Ui::RpmDisplayDlg *ui;
+    RPMInfo m_info;
+    QString m_strPath;
 };
 
 #endif // RPMDISPLAYDLG_H
