@@ -16,6 +16,7 @@ public:
     ~DataProcess();
 
      static bool QStringToRPMInfo(QString &str, RPMInfo &info);
+     static QStringList QStringlistToRPMInfo(QString &str);
 
 };
 
