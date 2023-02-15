@@ -56,6 +56,7 @@ bool GetRPMInfoBackend::getRPMInfoFromPackage(RPMInfo &info, QString strPath)
     connect(m_process,&QProcess::readyReadStandardOutput,this,[=, &info](){
         QString temp = m_process->readAllStandardOutput();
         qDebug()<<"read success! ";
+        qDebug()<<temp;
         DataProcess::QStringToRPMInfo(temp, info);
     });
     connect(m_process,&QProcess::readyReadStandardError,this, [=](){

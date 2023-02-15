@@ -15,6 +15,9 @@
  *    along with this program; if not, write to the Free Software
  *    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
+#include <QFileDialog>
+#include <QMessageBox>
+
 #include "RpmDisplayDlg.h"
 #include "ui_RpmDisplayDlg.h"
 
@@ -26,14 +29,63 @@ RpmDisplayDlg::RpmDisplayDlg(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    GetRPMInfoBackend *backend = GetRPMInfoBackend::getInstance();
-    RPMInfo info;
-    QString strPath = "test";
-    backend->getRPMInfoFromPackage(info,strPath);
+    m_strPath = "";
+    initUI();
 
 }
 
 RpmDisplayDlg::~RpmDisplayDlg()
 {
     delete ui;
+}
+
+void RpmDisplayDlg::slotFileChoose()
+{
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::AnyFile);
+
+    QStringList path;
+    if(dialog.exec())
+        path = dialog.selectedFiles();
+
+    if(path.isEmpty()) {
+        QMessageBox::information(nullptr, tr("Error"), tr("Please check the directory！ The directory can not be \"/\" or empty.") );
+        return;
+    }
+
+    QString newPath = path.at(0);
+    if(newPath.isEmpty()) {
+        QMessageBox::information(nullptr, tr("Error"), tr("Please check the directory！ The directory can not be \"/\" or empty.") );
+        return;
+    }
+
+    m_strPath = newPath;
+}
+
+void RpmDisplayDlg::initUI()
+{
+    if(m_strPath.isEmpty()){
+        slotFileChoose();
+    }
+
+    getRPMInfo(m_strPath);
+
+
+
+    ui->packageNameLabel->setText(m_info.packageName);
+    ui->summaryLabel->setText( m_info.summary);
+
+    ui->desLabel->setWordWrap(true);
+    ui->desLabel->setText( m_info.description);
+
+    ui->webBtn->setText( m_info.url);
+}
+
+bool RpmDisplayDlg::getRPMInfo(QString filePath)
+{
+    GetRPMInfoBackend *backend = GetRPMInfoBackend::getInstance();
+    m_info.clear();
+
+    filePath = "test";
+    return backend->getRPMInfoFromPackage(m_info,filePath);
 }
