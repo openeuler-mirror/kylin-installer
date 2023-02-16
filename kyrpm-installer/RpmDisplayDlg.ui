@@ -47,6 +47,13 @@
       </spacer>
      </item>
      <item>
+      <widget class="QLabel" name="webLabel">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="webBtn">
        <property name="text">
         <string>Website</string>
