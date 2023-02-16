@@ -59,7 +59,6 @@ QStringList DataProcess::QStringlistToRPMInfo(QString &str)
     for(int i=0;i<strList.count();i++)
     {
         QString strstr;
-        //        qDebug() << strList[i];
         if(strList[i].contains(QString("Description"))){
             Descriptionflag = true;
             continue;
@@ -67,16 +66,14 @@ QStringList DataProcess::QStringlistToRPMInfo(QString &str)
         if(Descriptionflag){
             Description += strList[i];
         }else{
-            strspl = strList[i].split(":");
+            strspl = strList[i].split(": ");
             for(int i=1;i<strspl.count();i++)
             {
                 strstr += strspl.at(i);
             }
-            //            qDebug() << strstr;
             RPMInfoList << strstr;
         }
     }
-    //    qDebug() << Description;
     RPMInfoList << Description;
     return  RPMInfoList;
 }

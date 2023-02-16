@@ -19,6 +19,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
+#include <QFileDialog>
+#include <QMessageBox>
+
 #include "RPMCommandWorker.h"
 
 
@@ -28,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     m_process = nullptr;
-
+    m_infoWidget = nullptr;
     //ui->textEdit->hide();
 
 
@@ -42,13 +45,20 @@ MainWindow::~MainWindow()
         delete m_process;
         m_process = nullptr;
     }
+
+    if(m_infoWidget != nullptr)
+    {
+        delete m_infoWidget;
+        m_infoWidget = nullptr;
+    }
+
     delete ui;
 }
 
 void MainWindow::showInfoMessage(bool isShown)
 {
     qDebug()<<"test++++++++++++++++"<< isShown;
-    ui->textEdit->setVisible(isShown);
+    //ui->textEdit->setVisible(isShown);
 }
 
 void MainWindow::runCommand()
@@ -78,7 +88,8 @@ void MainWindow::initSignals()
 {
     //todo
     //connect(ui->actionShowMessageLog,SIGNAL(triggered(bool)),this, SLOT(showInfoMessage(bool)));
-    connect(ui->installButton,SIGNAL(clicked()), this, SLOT(dnfInstall()));
+    //connect(ui->installButton,SIGNAL(clicked()), this, SLOT(dnfInstall()));
+    connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(slotFileChoose(bool)));
 
     //
 
@@ -112,5 +123,32 @@ bool MainWindow::dnfInstall(QString strPackageName)
 bool MainWindow::dnfInstall()
 {
     return dnfInstall("");
+}
+
+void MainWindow::slotFileChoose(bool)
+{
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::AnyFile);
+    const QStringList filters({"RPM files (*.rpm)",
+                                "Any files (*)"
+                               });
+    dialog.setNameFilters(filters);
+
+    QStringList path;
+    if(dialog.exec())
+        path = dialog.selectedFiles();
+
+    if(path.isEmpty()) {
+        QMessageBox::information(nullptr, tr("Error"), tr("Please check again!") );
+        return;
+    }
+
+    QString newPath = path.at(0);
+    if(newPath.isEmpty()) {
+        QMessageBox::information(nullptr, tr("Error"), tr("Please check again!") );
+        return;
+    }
+
+    m_strPath = newPath;
 }
 

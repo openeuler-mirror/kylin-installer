@@ -21,6 +21,7 @@
 
 #include <QMainWindow>
 #include <QProcess>
+#include "RpmDisplayWidget.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -41,12 +42,18 @@ private slots:
     void processCommandResult();
     bool dnfInstall(QString strPackageName);
     bool dnfInstall();
+    void slotFileChoose(bool);
+
 
 private:
     void initSignals();
+    void initUI();
 
 private:
     Ui::MainWindow *ui;
     QProcess *m_process;
+    RpmDisplayWidget* m_infoWidget;
+
+    QString m_strPath;
 };
 #endif // MAINWINDOW_H

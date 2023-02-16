@@ -22,6 +22,7 @@
 #include "ui_RpmDisplayDlg.h"
 
 #include "GetRPMInfoBackend.h"
+#include <QDebug>
 
 RpmDisplayDlg::RpmDisplayDlg(QWidget *parent) :
     QDialog(parent),
@@ -74,11 +75,15 @@ void RpmDisplayDlg::initUI()
 
     ui->packageNameLabel->setText(m_info.packageName);
     ui->summaryLabel->setText( m_info.summary);
+    ui->versionLabel->setText(m_info.version + "-" + m_info.release);
 
     ui->desLabel->setWordWrap(true);
     ui->desLabel->setText( m_info.description);
 
-    ui->webBtn->setText( m_info.url);
+    ui->webLabel->setOpenExternalLinks(true);
+    QString webLabelText = QString("<a style='color: blue; text-decoration: none' href=\"%1\">website").arg(m_info.url);
+    ui->webLabel->setText(webLabelText);
+    ui->webLabel->setToolTip(m_info.url);
 }
 
 bool RpmDisplayDlg::getRPMInfo(QString filePath)
