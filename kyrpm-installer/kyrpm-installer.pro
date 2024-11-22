@@ -22,6 +22,7 @@ SOURCES += \
     RPMCommandWorker.cpp \
     RpmDisplayDlg.cpp \
     RpmDisplayWidget.cpp \
+    common.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -32,6 +33,7 @@ HEADERS += \
     RPMCommandWorker.h \
     RpmDisplayDlg.h \
     RpmDisplayWidget.h \
+    common.h \
     mainwindow.h
 
 FORMS += \

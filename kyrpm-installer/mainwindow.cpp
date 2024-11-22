@@ -23,7 +23,7 @@
 #include <QMessageBox>
 
 #include "RPMCommandWorker.h"
-
+#include "common.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -36,6 +36,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     initSignals();
+    label_list << ui->label_name << ui->label_summary
+               << ui->label_version << ui->label_description
+               << ui->packageName_Label << ui->version_Label;
+    btn_list << ui->web_Btn << ui->install_Btn << ui->detail_Btn;
+    edt_list << ui->summary_textEdit << ui->description_textEdit;
+    hideUI();
 }
 
 MainWindow::~MainWindow()
@@ -149,6 +155,65 @@ void MainWindow::slotFileChoose(bool)
         return;
     }
 
-    m_strPath = newPath;
+    m_packagePath = newPath;
+
+    displayPackageInfo(m_packagePath);
 }
+
+void MainWindow::displayPackageInfo(QString packagePath)
+{
+    QString rpmName,rpmVersion,rpmInfo;
+    QStringList rpmNameList,rpmVersionList,rpmSummary,rpmInfoList;
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_NAME) + packagePath, rpmName, &rpmNameList);
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_VERSION) + packagePath, rpmVersion, &rpmVersionList);
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + " -qpi " + packagePath, rpmInfo, &rpmInfoList);
+    qInfo()<<rpmName<<rpmVersion<<rpmInfoList.at(15).split(":").at(1);
+
+    ui->packageName_Label->setText(rpmName);
+    ui->version_Label->setText(rpmVersion);
+    ui->summary_textEdit->setText(rpmInfoList.at(15).split(":").at(1));
+    ui->description_textEdit->setText(rpmInfoList.at(17));
+    showUI();
+}
+
+void MainWindow::hideUI()
+{
+    for (int i = 0; i < label_list.length(); i++) {
+        QLabel* label = label_list.at(i);
+        label->hide();
+    }
+
+    for (int i = 0; i < btn_list.length(); i++) {
+        QPushButton* btn = btn_list.at(i);
+        btn->hide();
+    }
+
+    for (int i = 0; i < edt_list.length(); i++) {
+        QTextEdit* edt = edt_list.at(i);
+        edt->hide();
+    }
+}
+
+void MainWindow::showUI()
+{
+    for (int i = 0; i < label_list.length(); i++) {
+        QLabel* label = label_list.at(i);
+        label->show();
+    }
+
+    for (int i = 0; i < btn_list.length(); i++) {
+        QPushButton* btn = btn_list.at(i);
+        btn->show();
+    }
+
+    for (int i = 0; i < edt_list.length(); i++) {
+        QTextEdit* edt = edt_list.at(i);
+        edt->show();
+    }
+}
+
+
+
+
+
 

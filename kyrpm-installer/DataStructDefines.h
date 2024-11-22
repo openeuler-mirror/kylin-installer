@@ -25,6 +25,8 @@
 
 #ifdef Q_OS_LINUX
 #define KYRPM_RPMPATH "/usr/bin/rpm"
+#define RPM_VERSION      " -q --qf=%{version}- --qf=%{Release} "
+#define RPM_NAME   " -q --qf=%{name} "
 #else
 //#define KYRPM_RPMPATH "brew"
 #define KYRPM_RPMPATH "/usr/local/Cellar/rpm/4.17.0_1/bin/rpm"
