@@ -21,6 +21,9 @@
 
 #include <QMainWindow>
 #include <QProcess>
+#include <QTextEdit>
+#include <QLabel>
+#include <QPushButton>
 #include "RpmDisplayWidget.h"
 
 
@@ -36,6 +39,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
 private slots:
     void showInfoMessage(bool isShown);
     void runCommand();
@@ -48,12 +52,19 @@ private slots:
 private:
     void initSignals();
     void initUI();
+    void displayPackageInfo(QString packagePath);
+    void hideUI();
+    void showUI();
+    QList<QTextEdit *> edt_list;
+    QList<QLabel *> label_list;
+    QList<QPushButton *> btn_list;
+
 
 private:
     Ui::MainWindow *ui;
     QProcess *m_process;
     RpmDisplayWidget* m_infoWidget;
 
-    QString m_strPath;
+    QString m_packagePath;
 };
 #endif // MAINWINDOW_H
