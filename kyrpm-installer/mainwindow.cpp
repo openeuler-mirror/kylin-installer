@@ -25,6 +25,7 @@
 #include "RPMCommandWorker.h"
 #include "common.h"
 #include "helpdlg.h"
+#include "messagedlg.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -63,15 +64,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::showInfoMessage(bool isShown)
+void MainWindow::showInfoMessage(bool)
 {
-    qDebug()<<"test++++++++++++++++"<< isShown;
-    //ui->textEdit->setVisible(isShown);
+    MessageDlg *msgDlg = new MessageDlg();
+    msgDlg->setOptions(m_resultList);
+    msgDlg->show();
 }
 
 void MainWindow::initSignals()
 {
-    //connect(ui->actionShowMessageLog,SIGNAL(triggered(bool)),this, SLOT(showInfoMessage(bool)));
+    connect(ui->actionShowMessageLog,SIGNAL(triggered(bool)),this, SLOT(showInfoMessage(bool)));
     connect(ui->install_Btn,SIGNAL(clicked()), this, SLOT(dnfInstall()));
     connect(ui->actionhelp,SIGNAL(triggered(bool)), this, SLOT(help(bool)));
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(slotFileChoose(bool)));
@@ -80,7 +82,7 @@ void MainWindow::initSignals()
 bool MainWindow::dnfInstall()
 {
     RPMCommandWorker *rpmWork = new RPMCommandWorker();
-    connect(rpmWork,SIGNAL(cmdEnd()),this,SLOT(installEnd()));
+    connect(rpmWork,SIGNAL(cmdEnd(QString)),this,SLOT(installEnd(QString)));
     rpmWork->setOptions(m_packagePath);
     rpmWork->start();
     return true;
@@ -179,8 +181,9 @@ void MainWindow::help(bool)
     helpDlg->show();
 }
 
-void MainWindow::installEnd()
+void MainWindow::installEnd(QString result)
 {
     ui->result_label->setText("安装成功");
+    m_resultList = result.split("\n");
 }
 

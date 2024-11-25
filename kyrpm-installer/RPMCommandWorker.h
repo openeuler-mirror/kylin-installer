@@ -49,7 +49,7 @@ private:
     QString result;
 
 signals:
-    void cmdEnd();
+    void cmdEnd(QString result);
 };
 
 #endif // RPMCOMMANDWORKER_H
