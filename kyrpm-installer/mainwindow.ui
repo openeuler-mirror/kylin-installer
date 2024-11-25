@@ -95,7 +95,7 @@
      <rect>
       <x>40</x>
       <y>10</y>
-      <width>82</width>
+      <width>93</width>
       <height>211</height>
      </rect>
     </property>
@@ -114,6 +114,13 @@
       <widget class="QPushButton" name="install_Btn">
        <property name="text">
         <string>Install</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="result_label">
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </item>

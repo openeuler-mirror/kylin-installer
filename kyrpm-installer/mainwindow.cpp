@@ -39,7 +39,8 @@ MainWindow::MainWindow(QWidget *parent)
     initSignals();
     label_list << ui->label_name << ui->label_summary
                << ui->label_version << ui->label_description
-               << ui->packageName_Label << ui->version_Label;
+               << ui->packageName_Label << ui->version_Label
+               << ui->result_label;
     btn_list << ui->web_Btn << ui->install_Btn << ui->detail_Btn;
     edt_list << ui->summary_textEdit << ui->description_textEdit;
     hideUI();
@@ -68,64 +69,21 @@ void MainWindow::showInfoMessage(bool isShown)
     //ui->textEdit->setVisible(isShown);
 }
 
-void MainWindow::runCommand()
-{
-    QString program = "ls";
-    QStringList arguments;
-    arguments << "";
-
-    m_process = new QProcess(this);
-
-    m_process->setReadChannel(QProcess::StandardOutput);
-    connect(m_process, SIGNAL(readyReadStandardOutput()),this, SLOT(processCommandResult()));
-
-    m_process->start(program, arguments);
-
-    bool b1 = m_process->waitForFinished();
-    qDebug()<<"----------------------"<<b1;
-}
-
-void MainWindow::processCommandResult()
-{
-    qDebug()<< "processCommandResult++++++++++++++++++";
-    qDebug() << m_process->readAllStandardOutput();
-}
-
 void MainWindow::initSignals()
 {
     //connect(ui->actionShowMessageLog,SIGNAL(triggered(bool)),this, SLOT(showInfoMessage(bool)));
-    //connect(ui->installButton,SIGNAL(clicked()), this, SLOT(dnfInstall()));
+    connect(ui->install_Btn,SIGNAL(clicked()), this, SLOT(dnfInstall()));
     connect(ui->actionhelp,SIGNAL(triggered(bool)), this, SLOT(help(bool)));
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(slotFileChoose(bool)));
 }
 
-bool MainWindow::dnfInstall(QString strPackageName)
-{
-    if(strPackageName.isEmpty())
-    {
-        qDebug()<<"can not install empty package!";
-
-//        QString path = "/Users/douyan/temp/ukui-greeter-1.2.1-48.1.p15.ky10.src.rpm";
-//        QStringList lst;
-//        lst << "-qi" << path;
-
-//        RPMCommandWorker *worker = new RPMCommandWorker();
-//        worker->setOptions(lst);
-//        worker->start();
-
-        return false;
-    }
-    //todo check rpm exist
-
-    //start run command
-    runCommand();
-
-    return true;
-}
-
 bool MainWindow::dnfInstall()
 {
-    return dnfInstall("");
+    RPMCommandWorker *rpmWork = new RPMCommandWorker();
+    connect(rpmWork,SIGNAL(cmdEnd()),this,SLOT(installEnd()));
+    rpmWork->setOptions(m_packagePath);
+    rpmWork->start();
+    return true;
 }
 
 void MainWindow::slotFileChoose(bool)
@@ -170,7 +128,6 @@ void MainWindow::displayPackageInfo(QString packagePath)
     Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_NAME) + packagePath, rpmName, &rpmNameList);
     Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_VERSION) + packagePath, rpmVersion, &rpmVersionList);
     Common::getTerminalOutput(QString(KYRPM_RPMPATH) + " -qpi " + packagePath, rpmInfo, &rpmInfoList);
-    qInfo()<<rpmName<<rpmVersion<<rpmInfoList.at(15).split(":").at(1);
 
     ui->packageName_Label->setText(rpmName);
     ui->version_Label->setText(rpmVersion);
@@ -213,6 +170,7 @@ void MainWindow::showUI()
         QTextEdit* edt = edt_list.at(i);
         edt->show();
     }
+    ui->result_label->clear();
 }
 
 void MainWindow::help(bool)
@@ -221,5 +179,8 @@ void MainWindow::help(bool)
     helpDlg->show();
 }
 
-
+void MainWindow::installEnd()
+{
+    ui->result_label->setText("安装成功");
+}
 

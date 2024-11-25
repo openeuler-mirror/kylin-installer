@@ -19,7 +19,7 @@
 #include "RPMCommandWorker.h"
 #include <QDebug>
 
-RPMCommandWorker::RPMCommandWorker(QObject *parent)
+RPMCommandWorker::RPMCommandWorker(QObject *parent) : QThread(parent)
 {
     init();
 }
@@ -61,7 +61,7 @@ void RPMCommandWorker::run()
     }
     //temp use command instead of rpm library
     QProcess  process;
-    process.start(KYRPM_RPMPATH,m_arguments);
+    process.start(QString(KYRPM_YUMPATH) + " -y install " + m_arguments.at(0));
 
     //wait process start
     if (!process.waitForStarted())
@@ -77,6 +77,7 @@ void RPMCommandWorker::run()
 
     qDebug()<<"+++++++++++++++++++"<<m_arguments;
     qDebug()<<result <<"++++++  " << process.readAllStandardError();
+    emit cmdEnd();
 }
 
 void RPMCommandWorker::init()

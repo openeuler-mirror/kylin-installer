@@ -47,6 +47,9 @@ private:
     void init();
 
     QString result;
+
+signals:
+    void cmdEnd();
 };
 
 #endif // RPMCOMMANDWORKER_H
