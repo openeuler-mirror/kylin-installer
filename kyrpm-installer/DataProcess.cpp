@@ -1,5 +1,6 @@
 #include "DataProcess.h"
 #include <QDebug>
+#include <QRegExp>
 
 DataProcess::DataProcess(QObject *parent)
     : QObject{parent}
@@ -19,30 +20,32 @@ bool DataProcess::QStringToRPMInfo(QString &str, RPMInfo &info)
     }
     info.clear();
     //todo
-
-    QStringList RPMInfoList = QStringlistToRPMInfo(str);
-    info.packageName = RPMInfoList.at(0);
-    info.epoch = RPMInfoList.at(1);
-    info.version = RPMInfoList.at(2);
-    info.release = RPMInfoList.at(3);
-    if(RPMInfoList.at(4).contains(QString("x86_64"))){
-        info.arch =Architecuture(0);
-    }else if(RPMInfoList.at(4).contains(QString("aarch"))){
-        info.arch =Architecuture(1);
-    }else{
-        info.arch =Architecuture(2);
+    QStringList RPMInfoList = str.split("\n");
+    for(auto i : RPMInfoList) {
+        static bool is_desc = false;
+        if(is_desc){
+            auto e = info.getInfo(RPMInfo::RPMINFO_KEY::description);
+            info.setInfo(RPMInfo::RPMINFO_KEY::description, e + i);
+            continue;
+        }
+        QRegExp rx("^(.*):(.*)$");
+        if(rx.indexIn(i) != -1){
+            qDebug()<<"error rpminfo string";
+            info.clear();
+            return false;
+        }
+        QString key = rx.cap(1).trimmed();
+        QString value = rx.cap(2).trimmed();
+        if(key == RPMInfo::rpminfo_key_Qstring[int(RPMInfo::RPMINFO_KEY::description)]){
+            is_desc = true;
+            continue;
+        }
+        if(!info.setInfo(key, value)){
+            qDebug()<<"error rpminfo key string";
+            info.clear();
+            return false;
+        }
     }
-    info.installDate = RPMInfoList.at(5);
-    info.group = RPMInfoList.at(6);
-    info.size = RPMInfoList.at(7).toInt();
-    info.licenses = RPMInfoList.at(8);
-    info.signature = RPMInfoList.at(9);
-    info.source = RPMInfoList.at(10);
-    info.buildDate = RPMInfoList.at(11);
-    info.buildHost = RPMInfoList.at(12);
-    info.url = RPMInfoList.at(13);
-    info.summary = RPMInfoList.at(14);
-    info.description = RPMInfoList.at(15);
 
     return true;
 }

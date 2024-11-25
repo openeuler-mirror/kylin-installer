@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     DataProcess.cpp \
+    DataStructDefines.cpp \
     GetRPMInfoBackend.cpp \
     RPMCommandWorker.cpp \
     RpmDisplayDlg.cpp \
