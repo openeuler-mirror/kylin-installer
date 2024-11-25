@@ -23,6 +23,7 @@ SOURCES += \
     RpmDisplayDlg.cpp \
     RpmDisplayWidget.cpp \
     common.cpp \
+    helpdlg.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -34,11 +35,13 @@ HEADERS += \
     RpmDisplayDlg.h \
     RpmDisplayWidget.h \
     common.h \
+    helpdlg.h \
     mainwindow.h
 
 FORMS += \
     RpmDisplayDlg.ui \
     RpmDisplayWidget.ui \
+    helpdlg.ui \
     mainwindow.ui
 
 # Default rules for deployment.

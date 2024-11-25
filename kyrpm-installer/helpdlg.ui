@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HelpDlg</class>
+ <widget class="QDialog" name="HelpDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>426</width>
+    <height>481</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>170</width>
+     <height>461</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStackedWidget" name="stackedWidget">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>10</y>
+     <width>221</width>
+     <height>461</height>
+    </rect>
+   </property>
+   <widget class="QWidget" name="overviewpage"/>
+   <widget class="QWidget" name="installoperationpage"/>
+   <widget class="QWidget" name="uninsatllpage"/>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

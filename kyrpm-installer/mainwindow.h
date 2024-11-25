@@ -47,7 +47,7 @@ private slots:
     bool dnfInstall(QString strPackageName);
     bool dnfInstall();
     void slotFileChoose(bool);
-
+    void help(bool);
 
 private:
     void initSignals();
