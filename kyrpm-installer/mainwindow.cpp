@@ -24,6 +24,7 @@
 
 #include "RPMCommandWorker.h"
 #include "common.h"
+#include "helpdlg.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -33,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_process = nullptr;
     m_infoWidget = nullptr;
     //ui->textEdit->hide();
-
+    this->setWindowTitle("rpm installer");
 
     initSignals();
     label_list << ui->label_name << ui->label_summary
@@ -92,14 +93,10 @@ void MainWindow::processCommandResult()
 
 void MainWindow::initSignals()
 {
-    //todo
     //connect(ui->actionShowMessageLog,SIGNAL(triggered(bool)),this, SLOT(showInfoMessage(bool)));
     //connect(ui->installButton,SIGNAL(clicked()), this, SLOT(dnfInstall()));
+    connect(ui->actionhelp,SIGNAL(triggered(bool)), this, SLOT(help(bool)));
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(slotFileChoose(bool)));
-
-    //
-
-
 }
 
 bool MainWindow::dnfInstall(QString strPackageName)
@@ -162,6 +159,12 @@ void MainWindow::slotFileChoose(bool)
 
 void MainWindow::displayPackageInfo(QString packagePath)
 {
+    QFile packageFilePath(packagePath);
+    if(!packageFilePath.exists())
+    {
+        QMessageBox::information(nullptr, tr("Error"), tr("Please check the directory！ The directory can not be \"/\" or empty.") );
+        return ;
+    }
     QString rpmName,rpmVersion,rpmInfo;
     QStringList rpmNameList,rpmVersionList,rpmSummary,rpmInfoList;
     Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_NAME) + packagePath, rpmName, &rpmNameList);
@@ -212,8 +215,11 @@ void MainWindow::showUI()
     }
 }
 
-
-
+void MainWindow::help(bool)
+{
+    HelpDlg *helpDlg = new HelpDlg();
+    helpDlg->show();
+}
 
 
 
