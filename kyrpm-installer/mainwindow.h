@@ -42,9 +42,6 @@ public:
 
 private slots:
     void showInfoMessage(bool isShown);
-    void runCommand();
-    void processCommandResult();
-    bool dnfInstall(QString strPackageName);
     bool dnfInstall();
     void slotFileChoose(bool);
     void help(bool);
@@ -66,5 +63,7 @@ private:
     RpmDisplayWidget* m_infoWidget;
 
     QString m_packagePath;
+private slots:
+    void installEnd();
 };
 #endif // MAINWINDOW_H
