@@ -45,6 +45,7 @@ private slots:
     bool dnfInstall();
     void slotFileChoose(bool);
     void help(bool);
+    void displayVersion(bool);
 
 private:
     void initSignals();

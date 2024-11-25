@@ -35,6 +35,7 @@
 #define KYRPM_YUMPATH "/usr/bin/yum"
 #define KYRPM_RPMBUILD	"rpm"
 #define TESTRPM "/Users/douyan/temp/kyrpm-installer/NetworkManager-1.32.12-14.oe2203sp1.src.rpm"
+#define VERSION "1.0-1"
 
 enum Architecuture {
     x86_64 = 0,
