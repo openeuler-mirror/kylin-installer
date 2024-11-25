@@ -41,7 +41,7 @@ public:
 
 
 private slots:
-    void showInfoMessage(bool isShown);
+    void showInfoMessage(bool);
     bool dnfInstall();
     void slotFileChoose(bool);
     void help(bool);
@@ -56,14 +56,15 @@ private:
     QList<QLabel *> label_list;
     QList<QPushButton *> btn_list;
 
-
 private:
     Ui::MainWindow *ui;
     QProcess *m_process;
     RpmDisplayWidget* m_infoWidget;
 
     QString m_packagePath;
+    QStringList m_resultList;
+
 private slots:
-    void installEnd();
+    void installEnd(QString result);
 };
 #endif // MAINWINDOW_H

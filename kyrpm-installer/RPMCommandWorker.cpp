@@ -77,7 +77,8 @@ void RPMCommandWorker::run()
 
     qDebug()<<"+++++++++++++++++++"<<m_arguments;
     qDebug()<<result <<"++++++  " << process.readAllStandardError();
-    emit cmdEnd();
+    qInfo()<<result;
+    emit cmdEnd(result);
 }
 
 void RPMCommandWorker::init()
