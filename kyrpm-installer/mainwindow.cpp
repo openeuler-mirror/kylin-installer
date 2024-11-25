@@ -123,16 +123,15 @@ void MainWindow::displayPackageInfo(QString packagePath)
         QMessageBox::information(nullptr, tr("Error"), tr("Please check the directory！ The directory can not be \"/\" or empty.") );
         return ;
     }
-    QString rpmName,rpmVersion,rpmInfo;
-    QStringList rpmNameList,rpmVersionList,rpmSummary,rpmInfoList;
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_NAME) + packagePath, rpmName, &rpmNameList);
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_VERSION) + packagePath, rpmVersion, &rpmVersionList);
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + " -qpi " + packagePath, rpmInfo, &rpmInfoList);
+    QString rpmDescription;
+    QStringList rpmNVS;
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_NVS) + packagePath, rpmDescription, &rpmNVS);
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_DESCRIPTION) + packagePath, rpmDescription, nullptr);
 
-    ui->packageName_Label->setText(rpmName);
-    ui->version_Label->setText(rpmVersion);
-    ui->summary_textEdit->setText(rpmInfoList.at(15).split(":").at(1));
-    ui->description_textEdit->setText(rpmInfoList.at(17));
+    ui->packageName_Label->setText(rpmNVS[0]);
+    ui->version_Label->setText(rpmNVS[1]);
+    ui->summary_textEdit->setText(rpmNVS[2]);
+    ui->description_textEdit->setText(rpmDescription);
     showUI();
 }
 
