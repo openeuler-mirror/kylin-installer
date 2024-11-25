@@ -26,6 +26,7 @@
 #include "common.h"
 #include "helpdlg.h"
 #include "messagedlg.h"
+#include "versiondlg.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -77,10 +78,17 @@ void MainWindow::initSignals()
     connect(ui->install_Btn,SIGNAL(clicked()), this, SLOT(dnfInstall()));
     connect(ui->actionhelp,SIGNAL(triggered(bool)), this, SLOT(help(bool)));
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(slotFileChoose(bool)));
+    connect(ui->actionVersion, SIGNAL(triggered(bool)), this, SLOT(displayVersion(bool)));
 }
 
 bool MainWindow::dnfInstall()
 {
+    QFile packageFilePath(m_packagePath);
+    if(!packageFilePath.exists())
+    {
+        QMessageBox::information(nullptr, tr("Error"), tr("rpm file is not exist！") );
+        return false;
+    }
     RPMCommandWorker *rpmWork = new RPMCommandWorker();
     connect(rpmWork,SIGNAL(cmdEnd(QString)),this,SLOT(installEnd(QString)));
     rpmWork->setOptions(m_packagePath);
@@ -119,12 +127,6 @@ void MainWindow::slotFileChoose(bool)
 
 void MainWindow::displayPackageInfo(QString packagePath)
 {
-    QFile packageFilePath(packagePath);
-    if(!packageFilePath.exists())
-    {
-        QMessageBox::information(nullptr, tr("Error"), tr("Please check the directory！ The directory can not be \"/\" or empty.") );
-        return ;
-    }
     QString rpmDescription;
     QStringList rpmNVS;
     Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_NVS) + packagePath, rpmDescription, &rpmNVS);
@@ -186,3 +188,8 @@ void MainWindow::installEnd(QString result)
     m_resultList = result.split("\n");
 }
 
+void MainWindow::displayVersion(bool)
+{
+    VersionDlg *verDlg = new VersionDlg();
+    verDlg->show();
+}

@@ -26,7 +26,8 @@ SOURCES += \
     helpdlg.cpp \
     main.cpp \
     mainwindow.cpp \
-    messagedlg.cpp
+    messagedlg.cpp \
+    versiondlg.cpp
 
 HEADERS += \
     DataProcess.h \
@@ -38,14 +39,16 @@ HEADERS += \
     common.h \
     helpdlg.h \
     mainwindow.h \
-    messagedlg.h
+    messagedlg.h \
+    versiondlg.h
 
 FORMS += \
     RpmDisplayDlg.ui \
     RpmDisplayWidget.ui \
     helpdlg.ui \
     mainwindow.ui \
-    messagedlg.ui
+    messagedlg.ui \
+    versiondlg.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
