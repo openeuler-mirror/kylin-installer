@@ -89,6 +89,8 @@ bool MainWindow::dnfInstall()
         QMessageBox::information(nullptr, tr("Error"), tr("rpm file is not exist！") );
         return false;
     }
+
+    ui->install_Btn->setEnabled(false);
     RPMCommandWorker *rpmWork = new RPMCommandWorker();
     connect(rpmWork,SIGNAL(cmdEnd(QString)),this,SLOT(installEnd(QString)));
     rpmWork->setOptions(m_packagePath);
@@ -184,6 +186,7 @@ void MainWindow::help(bool)
 
 void MainWindow::installEnd(QString result)
 {
+    ui->install_Btn->setEnabled(true);
     ui->result_label->setText("安装成功");
     m_resultList = result.split("\n");
 }
