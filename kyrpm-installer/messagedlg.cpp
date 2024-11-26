@@ -25,6 +25,7 @@ MessageDlg::MessageDlg(QWidget *parent) :
     ui(new Ui::MessageDlg)
 {
     ui->setupUi(this);
+    ui->textEdit->setReadOnly(true);
 }
 
 MessageDlg::~MessageDlg()

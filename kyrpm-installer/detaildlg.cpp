@@ -24,6 +24,7 @@ detailDlg::detailDlg(QWidget *parent) :
     ui(new Ui::detailDlg)
 {
     ui->setupUi(this);
+    ui->textEdit->setReadOnly(true);
 }
 
 detailDlg::~detailDlg()

@@ -47,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent)
                << ui->result_label;
     btn_list << ui->web_Btn << ui->install_Btn << ui->detail_Btn << ui->uninstall_Btn;
     edt_list << ui->summary_textEdit << ui->description_textEdit;
+    ui->summary_textEdit->setReadOnly(true);
+    ui->description_textEdit->setReadOnly(true);
     hideUI();
 }
 
