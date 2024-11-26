@@ -134,7 +134,7 @@ void MainWindow::slotFileChoose(bool)
     }
 
     QString rpmArch,osArch;
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_ARCH) + m_packagePath, rpmArch, nullptr);
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_ARCH) + m_packagePath, rpmArch);
     Common::getTerminalOutput("arch", osArch, nullptr);
     osArch = osArch.trimmed();
     qInfo()<<rpmArch<<osArch;
@@ -152,7 +152,7 @@ void MainWindow::displayPackageInfo(QString packagePath)
     QString rpmDescription;
     QStringList rpmNVS;
     Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_NVS) + packagePath, rpmDescription, &rpmNVS);
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_DESCRIPTION) + packagePath, rpmDescription, nullptr);
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_DESCRIPTION) + packagePath, rpmDescription);
 
     ui->packageName_Label->setText(rpmNVS[0]);
     ui->version_Label->setText(rpmNVS[1]);

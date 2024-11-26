@@ -18,12 +18,15 @@
 #include <QProcess>
 #include "common.h"
 
-bool Common::getTerminalOutput(const QString& strCmd, QString& result, QStringList* resultList, int timeout)
+bool Common::getTerminalOutput(const QString& strCmd, QString& result, QStringList* resultList, int *exitCode, int timeout)
 {
      QProcess pro;
      pro.start("sh",QStringList()<< "-c"<< strCmd);
      pro.waitForFinished(timeout);
 
+    if(exitCode){
+        *exitCode = pro.exitCode();
+    }
      result = pro.readAllStandardError();
 
      if(result.size() != 0)
