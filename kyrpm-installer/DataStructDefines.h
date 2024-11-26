@@ -28,8 +28,9 @@
 #define KYRPM_RPMPATH "/usr/bin/rpm"
 #define RPM_NVS " -q --qf=\"%{name}\n%{version}-%{release}\n%{summary}\n\" "
 #define RPM_DESCRIPTION   " -q --qf=%{description} "
-#define RPM_QPI " -qpi "
+#define RPM_QI " -qi "
 #define RPM_ARCH " -qp --qf=%{ARCH} "
+#define RPM_INSTALLED_PACKAGE " -qa "
 #else
 //#define KYRPM_RPMPATH "brew"
 #define KYRPM_RPMPATH "/usr/local/Cellar/rpm/4.17.0_1/bin/rpm"

@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     versionWindow = new VersionDlg();
     detailWindow = new detailDlg();
     messageWindow = new MessageDlg();
+    installedWindow = new installedPackageDlg();
     //ui->textEdit->hide();
     this->setWindowTitle("rpm installer");
 
@@ -44,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
                << ui->label_version << ui->label_description
                << ui->packageName_Label << ui->version_Label
                << ui->result_label;
-    btn_list << ui->web_Btn << ui->install_Btn << ui->detail_Btn;
+    btn_list << ui->web_Btn << ui->install_Btn << ui->detail_Btn << ui->uninstall_Btn;
     edt_list << ui->summary_textEdit << ui->description_textEdit;
     hideUI();
 }
@@ -81,6 +82,15 @@ void MainWindow::initSignals()
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(slotFileChoose(bool)));
     connect(ui->actionVersion, SIGNAL(triggered(bool)), this, SLOT(displayVersion(bool)));
     connect(ui->detail_Btn, SIGNAL(clicked()), this, SLOT(displayDetailInfo()));
+    connect(ui->actionSelect_installed_package, SIGNAL(triggered(bool)), this, SLOT(displayInstalledPackage(bool)));
+}
+
+void MainWindow::selectInstalledPackage(QString pkgName)
+{
+    m_packagePath = pkgName;
+    ui->install_Btn->setEnabled(false);
+    ui->uninstall_Btn->setEnabled(true);
+    displayPackageInfo(m_packagePath);
 }
 
 bool MainWindow::dnfInstall()
@@ -143,7 +153,8 @@ void MainWindow::slotFileChoose(bool)
         QMessageBox::information(nullptr, tr("Error"), tr("os arch and rpm arch are inconsistent！") );
         return ;
     }
-
+    ui->uninstall_Btn->setEnabled(false);
+    ui->install_Btn->setEnabled(true);
     displayPackageInfo(m_packagePath);
 }
 
@@ -223,12 +234,20 @@ void MainWindow::displayVersion(bool)
     versionWindow->activateWindow();
 }
 
+void MainWindow::displayInstalledPackage(bool)
+{
+    installedWindow->setWindowTitle("Installed Packages List, select one to uninstall");
+    installedWindow->getPackages();
+    installedWindow->show();
+    installedWindow->activateWindow();
+    connect(installedWindow, SIGNAL(selectInstalledPackage(QString)), this, SLOT(selectInstalledPackage(QString)));
+}
 
 void MainWindow::displayDetailInfo()
 {
     QString rpmInfoStr;
     QStringList rpmInfoList;
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_QPI) + m_packagePath, rpmInfoStr, &rpmInfoList);
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_QI) + m_packagePath, rpmInfoStr, &rpmInfoList);
     detailWindow->setOptions(rpmInfoList);
     detailWindow->show();
     detailWindow->activateWindow();
@@ -248,5 +267,24 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     if (messageWindow) {
         messageWindow->close();
     }
+    if(installedWindow) {
+        installedWindow->close();
+    }
     QMainWindow::closeEvent(event);
+}
+
+void MainWindow::on_uninstall_Btn_clicked()
+{
+    ui->uninstall_Btn->setEnabled(false);
+    QString rpm_e_output;
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(" -e ") + m_packagePath, rpm_e_output, NULL);
+    qInfo()<<rpm_e_output;
+    if(rpm_e_output == ""){
+        ui->result_label->setText("uninstall success");
+    }else{
+       ui->result_label->setText("uninstall failed");
+    }
+    ui->uninstall_Btn->setEnabled(true);
+    m_resultList = rpm_e_output.split("\n");
+
 }

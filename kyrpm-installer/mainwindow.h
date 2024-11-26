@@ -29,6 +29,7 @@
 #include "detaildlg.h"
 #include "versiondlg.h"
 #include "messagedlg.h"
+#include "installedpackagedlg.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -51,13 +52,15 @@ private slots:
     void help(bool);
     void displayVersion(bool);
     void displayDetailInfo();
+    void displayInstalledPackage(bool);
+    void selectInstalledPackage(QString);
 
 private:
     void initSignals();
     void initUI();
-    void displayPackageInfo(QString packagePath);
     void hideUI();
     void showUI();
+    void displayPackageInfo(QString packagePath);
     QList<QTextEdit *> edt_list;
     QList<QLabel *> label_list;
     QList<QPushButton *> btn_list;
@@ -74,11 +77,14 @@ private:
     VersionDlg *versionWindow;
     detailDlg *detailWindow;
     MessageDlg *messageWindow;
+    installedPackageDlg *installedWindow;
+
 
 protected:
     void closeEvent(QCloseEvent *event) override;
 
 private slots:
     void installEnd(QString result,int exitCode);
+    void on_uninstall_Btn_clicked();
 };
 #endif // MAINWINDOW_H
