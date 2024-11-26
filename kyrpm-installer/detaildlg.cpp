@@ -17,6 +17,7 @@
  */
 #include "detaildlg.h"
 #include "ui_detaildlg.h"
+#include <QTextCursor>
 
 detailDlg::detailDlg(QWidget *parent) :
     QDialog(parent),
@@ -37,4 +38,7 @@ void detailDlg::setOptions(QStringList detailInfoList)
     {
         ui->textEdit->append(detailInfoList.at(i));
     }
+    QTextCursor cursor = ui->textEdit->textCursor();
+    cursor.movePosition(QTextCursor::Start);
+    ui->textEdit->setTextCursor(cursor);
 }

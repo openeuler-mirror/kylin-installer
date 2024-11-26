@@ -114,7 +114,6 @@ void MainWindow::slotFileChoose(bool)
         path = dialog.selectedFiles();
 
     if(path.isEmpty()) {
-        QMessageBox::information(nullptr, tr("Error"), tr("Please check again!") );
         return;
     }
 

@@ -18,6 +18,7 @@
 #include "messagedlg.h"
 #include "ui_messagedlg.h"
 #include <QDebug>
+#include <QTextCursor>
 
 MessageDlg::MessageDlg(QWidget *parent) :
     QDialog(parent),
@@ -38,4 +39,7 @@ void MessageDlg::setOptions(QStringList resultList)
     {
         ui->textEdit->append(resultList.at(i));
     }
+    QTextCursor cursor = ui->textEdit->textCursor();
+    cursor.movePosition(QTextCursor::Start);
+    ui->textEdit->setTextCursor(cursor);
 }
