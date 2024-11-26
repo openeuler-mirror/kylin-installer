@@ -33,6 +33,7 @@ MessageDlg::~MessageDlg()
 
 void MessageDlg::setOptions(QStringList resultList)
 {
+    ui->textEdit->clear();
     for(int i = 0; i < resultList.length(); i++)
     {
         ui->textEdit->append(resultList.at(i));

@@ -68,9 +68,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::showInfoMessage(bool)
 {
-    MessageDlg *msgDlg = new MessageDlg();
+    static MessageDlg *msgDlg = new MessageDlg();
     msgDlg->setOptions(m_resultList);
     msgDlg->show();
+    msgDlg->activateWindow();
 }
 
 void MainWindow::initSignals()
@@ -199,8 +200,9 @@ void MainWindow::showUI()
 
 void MainWindow::help(bool)
 {
-    HelpDlg *helpDlg = new HelpDlg();
+    static HelpDlg *helpDlg = new HelpDlg();
     helpDlg->show();
+    helpDlg->activateWindow();
 }
 
 void MainWindow::installEnd(QString result,int exitCode)
@@ -218,8 +220,9 @@ void MainWindow::installEnd(QString result,int exitCode)
 
 void MainWindow::displayVersion(bool)
 {
-    VersionDlg *verDlg = new VersionDlg();
+    static VersionDlg *verDlg = new VersionDlg();
     verDlg->show();
+    verDlg->activateWindow();
 }
 
 
