@@ -20,6 +20,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QMap>
 //定义公用的数据结构
 //data struct defines
 
@@ -80,43 +81,40 @@ enum Architecuture {
 //};
 
 //rpm info
+
+
 struct RPMInfo
 {
-    QString packageName;
-    QString epoch;
-    QString version;
-    QString release;
-    Architecuture arch;
-    QString installDate;
-    QString group;
-    int size;
-    QString licenses;
-    QString signature;
-    QString source;
-    QString buildDate;
-    QString buildHost;
-    QString url;
-    QString summary;
-    QString description;
+    enum class RPMINFO_KEY{
+        name,
+        epoch,
+        version,
+        release,
+        arch,
+        installData,
+        group,
+        size,
+        license,
+        signature,
+        sourceRPM,
+        buildDate,
+        buildHost,
+        URL,
+        summary,
+        description,
+        __count
+    };
 
-    void clear() {
-        packageName="";
-        epoch="";
-        version="";
-        release="";
-        arch=unknown;
-        installDate="";
-        group="";
-        size=-1;
-        licenses="";
-        signature="";
-        source="";
-        buildDate="";
-        buildHost="";
-        url="";
-        summary="";
-        description="";
-    }
+    static const QString rpminfo_key_Qstring[];
+
+    void clear();
+    QString getInfo(RPMINFO_KEY key);
+    bool setInfo(RPMINFO_KEY key, const QString &value);
+    bool setInfo(const QString &key, const QString &value);
+
+private:
+    QMap<RPMINFO_KEY, QString> info;
 };
+
 
 #endif // DATASTRUCTDEFINES_H

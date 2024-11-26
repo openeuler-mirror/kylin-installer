@@ -73,17 +73,17 @@ void RpmDisplayDlg::initUI()
 
 
 
-    ui->packageNameLabel->setText(m_info.packageName);
-    ui->summaryLabel->setText( m_info.summary);
-    ui->versionLabel->setText(m_info.version + "-" + m_info.release);
+    ui->packageNameLabel->setText(m_info.getInfo(RPMInfo::RPMINFO_KEY::name));
+    ui->summaryLabel->setText(m_info.getInfo(RPMInfo::RPMINFO_KEY::summary));
+    ui->versionLabel->setText(m_info.getInfo(RPMInfo::RPMINFO_KEY::version) + "-" + m_info.getInfo(RPMInfo::RPMINFO_KEY::release));
 
     ui->desLabel->setWordWrap(true);
-    ui->desLabel->setText( m_info.description);
+    ui->desLabel->setText(m_info.getInfo(RPMInfo::RPMINFO_KEY::description));
 
     ui->webLabel->setOpenExternalLinks(true);
-    QString webLabelText = QString("<a style='color: blue; text-decoration: none' href=\"%1\">website").arg(m_info.url);
+    QString webLabelText = QString("<a style='color: blue; text-decoration: none' href=\"%1\">website").arg(m_info.getInfo(RPMInfo::RPMINFO_KEY::URL));
     ui->webLabel->setText(webLabelText);
-    ui->webLabel->setToolTip(m_info.url);
+    ui->webLabel->setToolTip(m_info.getInfo(RPMInfo::RPMINFO_KEY::URL));
 }
 
 bool RpmDisplayDlg::getRPMInfo(QString filePath)
@@ -92,5 +92,6 @@ bool RpmDisplayDlg::getRPMInfo(QString filePath)
     m_info.clear();
 
     filePath = "test";
-    return backend->getRPMInfoFromPackage(m_info,filePath);
+    return backend->
+            getRPMInfoFromPackage(m_info,filePath);
 }
