@@ -46,6 +46,7 @@ private slots:
     void slotFileChoose(bool);
     void help(bool);
     void displayVersion(bool);
+    void displayDetailInfo();
 
 private:
     void initSignals();

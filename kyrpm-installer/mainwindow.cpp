@@ -27,6 +27,7 @@
 #include "helpdlg.h"
 #include "messagedlg.h"
 #include "versiondlg.h"
+#include "detaildlg.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -79,6 +80,7 @@ void MainWindow::initSignals()
     connect(ui->actionhelp,SIGNAL(triggered(bool)), this, SLOT(help(bool)));
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(slotFileChoose(bool)));
     connect(ui->actionVersion, SIGNAL(triggered(bool)), this, SLOT(displayVersion(bool)));
+    connect(ui->detail_Btn, SIGNAL(clicked()), this, SLOT(displayDetailInfo()));
 }
 
 bool MainWindow::dnfInstall()
@@ -195,4 +197,16 @@ void MainWindow::displayVersion(bool)
 {
     VersionDlg *verDlg = new VersionDlg();
     verDlg->show();
+}
+
+
+void MainWindow::displayDetailInfo()
+{
+    QString rpmInfoStr;
+    QStringList rpmInfoList;
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_QPI) + m_packagePath, rpmInfoStr, &rpmInfoList);
+    detailDlg *dtDlg = new detailDlg();
+    dtDlg->setOptions(rpmInfoList);
+    dtDlg->show();
+
 }
