@@ -67,6 +67,6 @@ private:
     QStringList m_resultList;
 
 private slots:
-    void installEnd(QString result);
+    void installEnd(QString result,int exitCode);
 };
 #endif // MAINWINDOW_H

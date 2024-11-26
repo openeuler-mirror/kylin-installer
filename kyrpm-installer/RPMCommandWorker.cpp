@@ -71,14 +71,22 @@ void RPMCommandWorker::run()
         return;
     }
 
-    process.waitForFinished();
-
-    result = process.readAllStandardOutput();
-
-    qDebug()<<"+++++++++++++++++++"<<m_arguments;
-    qDebug()<<result <<"++++++  " << process.readAllStandardError();
-    qInfo()<<result;
-    emit cmdEnd(result);
+    if(!process.waitForFinished())
+    {
+        qInfo()<<process.error();
+    }else
+    {
+        int exitCode = process.exitCode();
+        result = process.readAllStandardOutput();
+        qInfo()<<result;
+        if(exitCode == 0)
+        {
+            emit cmdEnd(result,0);
+        }else
+        {
+            emit cmdEnd(result,1);
+        }
+    }
 }
 
 void RPMCommandWorker::init()
