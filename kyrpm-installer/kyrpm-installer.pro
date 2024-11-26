@@ -24,6 +24,7 @@ SOURCES += \
     RpmDisplayDlg.cpp \
     RpmDisplayWidget.cpp \
     common.cpp \
+    detaildlg.cpp \
     helpdlg.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     RpmDisplayDlg.h \
     RpmDisplayWidget.h \
     common.h \
+    detaildlg.h \
     helpdlg.h \
     mainwindow.h \
     messagedlg.h \
@@ -46,6 +48,7 @@ HEADERS += \
 FORMS += \
     RpmDisplayDlg.ui \
     RpmDisplayWidget.ui \
+    detaildlg.ui \
     helpdlg.ui \
     mainwindow.ui \
     messagedlg.ui \

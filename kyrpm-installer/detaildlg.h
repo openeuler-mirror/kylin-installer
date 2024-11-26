@@ -15,25 +15,27 @@
  *    along with this program; if not, write to the Free Software
  *    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
-#ifndef VERSIONDLG_H
-#define VERSIONDLG_H
+#ifndef DETAILDLG_H
+#define DETAILDLG_H
 
 #include <QDialog>
 
 namespace Ui {
-class VersionDlg;
+class detailDlg;
 }
 
-class VersionDlg : public QDialog
+class detailDlg : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit VersionDlg(QWidget *parent = nullptr);
-    ~VersionDlg();
+    explicit detailDlg(QWidget *parent = nullptr);
+    ~detailDlg();
+
+    void setOptions(QStringList detailInfoList);
 
 private:
-    Ui::VersionDlg *ui;
+    Ui::detailDlg *ui;
 };
 
-#endif // VERSIONDLG_H
+#endif // DETAILDLG_H
