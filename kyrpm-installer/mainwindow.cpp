@@ -24,10 +24,6 @@
 
 #include "RPMCommandWorker.h"
 #include "common.h"
-#include "helpdlg.h"
-#include "messagedlg.h"
-#include "versiondlg.h"
-#include "detaildlg.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -36,6 +32,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     m_process = nullptr;
     m_infoWidget = nullptr;
+    helpWindow = new HelpDlg();
+    versionWindow = new VersionDlg();
+    detailWindow = new detailDlg();
+    messageWindow = new MessageDlg();
     //ui->textEdit->hide();
     this->setWindowTitle("rpm installer");
 
@@ -68,10 +68,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::showInfoMessage(bool)
 {
-    static MessageDlg *msgDlg = new MessageDlg();
-    msgDlg->setOptions(m_resultList);
-    msgDlg->show();
-    msgDlg->activateWindow();
+    messageWindow->setOptions(m_resultList);
+    messageWindow->show();
+    messageWindow->activateWindow();
 }
 
 void MainWindow::initSignals()
@@ -201,9 +200,8 @@ void MainWindow::showUI()
 
 void MainWindow::help(bool)
 {
-    static HelpDlg *helpDlg = new HelpDlg();
-    helpDlg->show();
-    helpDlg->activateWindow();
+    helpWindow->show();
+    helpWindow->activateWindow();
 }
 
 void MainWindow::installEnd(QString result,int exitCode)
@@ -221,9 +219,8 @@ void MainWindow::installEnd(QString result,int exitCode)
 
 void MainWindow::displayVersion(bool)
 {
-    static VersionDlg *verDlg = new VersionDlg();
-    verDlg->show();
-    verDlg->activateWindow();
+    versionWindow->show();
+    versionWindow->activateWindow();
 }
 
 
@@ -232,9 +229,24 @@ void MainWindow::displayDetailInfo()
     QString rpmInfoStr;
     QStringList rpmInfoList;
     Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_QPI) + m_packagePath, rpmInfoStr, &rpmInfoList);
-    static detailDlg *dtDlg = new detailDlg();
-    dtDlg->setOptions(rpmInfoList);
-    dtDlg->show();
-    dtDlg->activateWindow();
+    detailWindow->setOptions(rpmInfoList);
+    detailWindow->show();
+    detailWindow->activateWindow();
 
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    if (helpWindow) {
+        helpWindow->close();
+    }
+    if (versionWindow) {
+        versionWindow->close();
+    }
+    if (detailWindow) {
+        detailWindow->close();
+    }
+    if (messageWindow) {
+        messageWindow->close();
+    }
+    QMainWindow::closeEvent(event);
 }
