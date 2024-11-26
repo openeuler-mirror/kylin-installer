@@ -32,6 +32,7 @@ detailDlg::~detailDlg()
 
 void detailDlg::setOptions(QStringList detailInfoList)
 {
+    ui->textEdit->clear();
     for(int i = 0; i < detailInfoList.length(); i++)
     {
         ui->textEdit->append(detailInfoList.at(i));
