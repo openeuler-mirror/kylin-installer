@@ -136,7 +136,8 @@ void MainWindow::slotFileChoose(bool)
     QString rpmArch,osArch;
     Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_ARCH) + m_packagePath, rpmArch, nullptr);
     Common::getTerminalOutput("arch", osArch, nullptr);
-    qInfo()<<rpmArch<<rpmArch;
+    osArch = osArch.trimmed();
+    qInfo()<<rpmArch<<osArch;
     if(rpmArch != osArch)
     {
         QMessageBox::information(nullptr, tr("Error"), tr("os arch and rpm arch are inconsistent！") );
