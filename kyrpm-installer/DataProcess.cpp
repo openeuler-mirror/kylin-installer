@@ -70,9 +70,9 @@ QStringList DataProcess::QStringlistToRPMInfo(QString &str)
             Description += strList[i];
         }else{
             strspl = strList[i].split(": ");
-            for(int i=1;i<strspl.count();i++)
+            for(int j=1;j<strspl.count();j++)
             {
-                strstr += strspl.at(i);
+                strstr += strspl.at(j);
             }
             RPMInfoList << strstr;
         }
