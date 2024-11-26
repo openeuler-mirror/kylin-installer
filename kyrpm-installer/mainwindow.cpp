@@ -126,6 +126,23 @@ void MainWindow::slotFileChoose(bool)
 
     m_packagePath = newPath;
 
+    QFileInfo fileInfo(m_packagePath);
+    if(fileInfo.suffix() != "rpm")
+    {
+        QMessageBox::information(nullptr, tr("Error"), tr("the file is not rpm package！") );
+        return ;
+    }
+
+    QString rpmArch,osArch;
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_ARCH) + m_packagePath, rpmArch, nullptr);
+    Common::getTerminalOutput("arch", osArch, nullptr);
+    qInfo()<<rpmArch<<rpmArch;
+    if(rpmArch != osArch)
+    {
+        QMessageBox::information(nullptr, tr("Error"), tr("os arch and rpm arch are inconsistent！") );
+        return ;
+    }
+
     displayPackageInfo(m_packagePath);
 }
 
