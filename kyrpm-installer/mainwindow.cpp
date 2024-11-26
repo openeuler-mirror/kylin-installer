@@ -94,7 +94,7 @@ bool MainWindow::dnfInstall()
 
     ui->install_Btn->setEnabled(false);
     RPMCommandWorker *rpmWork = new RPMCommandWorker();
-    connect(rpmWork,SIGNAL(cmdEnd(QString)),this,SLOT(installEnd(QString)));
+    connect(rpmWork,SIGNAL(cmdEnd(QString,int)),this,SLOT(installEnd(QString,int)));
     rpmWork->setOptions(m_packagePath);
     rpmWork->start();
     return true;
@@ -203,10 +203,16 @@ void MainWindow::help(bool)
     helpDlg->show();
 }
 
-void MainWindow::installEnd(QString result)
+void MainWindow::installEnd(QString result,int exitCode)
 {
+    if(exitCode == 0)
+    {
+        ui->result_label->setText("安装成功");
+    }else
+    {
+       ui->result_label->setText("安装失败");
+    }
     ui->install_Btn->setEnabled(true);
-    ui->result_label->setText("安装成功");
     m_resultList = result.split("\n");
 }
 
