@@ -222,8 +222,9 @@ void MainWindow::displayDetailInfo()
     QString rpmInfoStr;
     QStringList rpmInfoList;
     Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_QPI) + m_packagePath, rpmInfoStr, &rpmInfoList);
-    detailDlg *dtDlg = new detailDlg();
+    static detailDlg *dtDlg = new detailDlg();
     dtDlg->setOptions(rpmInfoList);
     dtDlg->show();
+    dtDlg->activateWindow();
 
 }
