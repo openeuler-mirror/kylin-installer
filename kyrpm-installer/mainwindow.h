@@ -25,6 +25,10 @@
 #include <QLabel>
 #include <QPushButton>
 #include "RpmDisplayWidget.h"
+#include "helpdlg.h"
+#include "detaildlg.h"
+#include "versiondlg.h"
+#include "messagedlg.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -65,6 +69,14 @@ private:
 
     QString m_packagePath;
     QStringList m_resultList;
+
+    HelpDlg *helpWindow;
+    VersionDlg *versionWindow;
+    detailDlg *detailWindow;
+    MessageDlg *messageWindow;
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 private slots:
     void installEnd(QString result,int exitCode);
