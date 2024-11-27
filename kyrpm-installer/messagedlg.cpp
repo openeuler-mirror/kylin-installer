@@ -26,6 +26,7 @@ MessageDlg::MessageDlg(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->textEdit->setReadOnly(true);
+    this->setWindowTitle("install info");
 }
 
 MessageDlg::~MessageDlg()
