@@ -50,6 +50,7 @@ private slots:
     bool dnfInstall();
     void installEnd(QString result,int exitCode);
     void slotFileChoose(bool);
+    void getyumlists(bool);
     void help(bool);
     void displayVersion(bool);
     void displayDetailInfo();
