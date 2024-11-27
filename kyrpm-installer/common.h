@@ -23,7 +23,7 @@
 class Common
 {
 public:
-    static bool getTerminalOutput(const QString& strCmd, QString& result, QStringList* resultList=nullptr, int timeout=30000);
+    static bool getTerminalOutput(const QString& strCmd, QString& result, QStringList* resultList=nullptr, int *exitCode=nullptr, int timeout=30000);
 };
 
 #endif // COMMON_H
