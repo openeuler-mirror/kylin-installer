@@ -6,23 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>603</width>
-    <height>456</height>
+    <width>597</width>
+    <height>448</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QTextEdit" name="textEdit">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>581</width>
-     <height>431</height>
-    </rect>
-   </property>
-  </widget>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QTextEdit" name="textEdit"/>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

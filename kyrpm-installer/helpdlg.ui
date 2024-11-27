@@ -13,29 +13,21 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QListWidget" name="listWidget">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>170</width>
-     <height>461</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStackedWidget" name="stackedWidget">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>10</y>
-     <width>221</width>
-     <height>461</height>
-    </rect>
-   </property>
-   <widget class="QWidget" name="overviewpage"/>
-   <widget class="QWidget" name="installoperationpage"/>
-   <widget class="QWidget" name="uninsatllpage"/>
-  </widget>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QListWidget" name="listWidget"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>2</number>
+     </property>
+     <widget class="QWidget" name="overviewpage"/>
+     <widget class="QWidget" name="installoperationpage"/>
+     <widget class="QWidget" name="uninsatllpage"/>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
