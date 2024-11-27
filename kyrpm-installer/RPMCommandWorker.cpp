@@ -35,17 +35,17 @@ void RPMCommandWorker::stop()
     this->wait();
 }
 
-void RPMCommandWorker::setOptions(const QString arguments)
+void RPMCommandWorker::setOptions(const QString arguments, bool isInstall)
 {
     m_arguments << arguments;
-
+    installOrUninstall = isInstall;
     result = "";
 }
 
-void RPMCommandWorker::setOptions(const QStringList arguments)
+void RPMCommandWorker::setOptions(const QStringList arguments, bool isInstall)
 {
     m_arguments = arguments;
-
+    installOrUninstall = isInstall;
     result = "";
 }
 
@@ -61,7 +61,14 @@ void RPMCommandWorker::run()
     }
     //temp use command instead of rpm library
     QProcess  process;
-    process.start(QString(KYRPM_YUMPATH) + " -y install " + m_arguments.at(0));
+    if (installOrUninstall)
+    {
+        process.start(QString(KYRPM_YUMPATH) + " -y install " + m_arguments.at(0));
+    }
+    else
+    {
+        process.start(QString(KYRPM_YUMPATH) + " -y remove " + m_arguments.at(0));
+    }
 
     //wait process start
     if (!process.waitForStarted())

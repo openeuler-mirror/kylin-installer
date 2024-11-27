@@ -32,8 +32,8 @@ public:
 
     void stop();
 
-    void setOptions(const QString m_arguments);
-    void setOptions(const QStringList m_arguments);
+    void setOptions(const QString m_arguments, bool isInstall);
+    void setOptions(const QStringList m_arguments, bool isInstall);
 
 
     QString getInfo();
@@ -42,6 +42,7 @@ protected:
 
     //command
     QStringList m_arguments;
+    bool installOrUninstall;
 
 private:
     void init();

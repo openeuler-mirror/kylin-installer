@@ -48,12 +48,16 @@ public:
 private slots:
     void showInfoMessage(bool);
     bool dnfInstall();
+    void installEnd(QString result,int exitCode);
     void slotFileChoose(bool);
     void help(bool);
     void displayVersion(bool);
     void displayDetailInfo();
     void displayInstalledPackage(bool);
     void selectInstalledPackage(QString);
+    bool dnfUninstall();
+    void UninstallEnd(QString result,int exitCode);
+    void on_web_Btn_clicked();
 
 private:
     void initSignals();
@@ -79,14 +83,10 @@ private:
     MessageDlg *messageWindow;
     installedPackageDlg *installedWindow;
     QMovie *installMove;
+    QMovie *uninstallMove;
 
 
 protected:
     void closeEvent(QCloseEvent *event) override;
-
-private slots:
-    void installEnd(QString result,int exitCode);
-    void on_uninstall_Btn_clicked();
-    void on_web_Btn_clicked();
 };
 #endif // MAINWINDOW_H
