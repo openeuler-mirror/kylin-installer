@@ -154,16 +154,10 @@ bool MainWindow::dnfUninstall()
 
 void MainWindow::slotFileChoose(bool)
 {
-    QFileDialog dialog(this);
-    dialog.setFileMode(QFileDialog::AnyFile);
-    const QStringList filters({"RPM files (*.rpm)",
-                                "Any files (*)"
-                               });
-    dialog.setNameFilters(filters);
-
-    QStringList path;
-    if(dialog.exec())
-        path = dialog.selectedFiles();
+    QStringList path = QFileDialog::getOpenFileNames(this,
+                                                     tr("Select RPM File"),
+                                                     "/home",
+                                                     tr("RPM Files (*.rpm);;All Files (*)"));
 
     if(path.isEmpty()) {
         return;
@@ -189,7 +183,7 @@ void MainWindow::slotFileChoose(bool)
     Common::getTerminalOutput("arch", osArch, nullptr);
     osArch = osArch.trimmed();
     qInfo()<<rpmArch<<osArch;
-    if(rpmArch != osArch)
+    if(rpmArch != osArch && rpmArch != "noarch" )
     {
         QMessageBox::information(nullptr, tr("Error"), tr("os arch and rpm arch are inconsistent！") );
         return ;
