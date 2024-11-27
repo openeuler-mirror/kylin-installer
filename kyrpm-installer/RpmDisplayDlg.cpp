@@ -49,18 +49,12 @@ void RpmDisplayDlg::slotFileChoose()
     if(dialog.exec())
         path = dialog.selectedFiles();
 
-    if(path.isEmpty()) {
-        QMessageBox::information(nullptr, tr("Error"), tr("Please check the directory！ The directory can not be \"/\" or empty.") );
+    if(path.isEmpty() || path.at(0).isEmpty()) {
+        QMessageBox::information(nullptr, tr("Error"), tr("Please check the directory! The directory can not be \"/\" or empty.") );
         return;
     }
 
-    QString newPath = path.at(0);
-    if(newPath.isEmpty()) {
-        QMessageBox::information(nullptr, tr("Error"), tr("Please check the directory！ The directory can not be \"/\" or empty.") );
-        return;
-    }
-
-    m_strPath = newPath;
+    m_strPath = path.at(0);
 }
 
 void RpmDisplayDlg::initUI()
@@ -70,8 +64,6 @@ void RpmDisplayDlg::initUI()
     }
 
     getRPMInfo(m_strPath);
-
-
 
     ui->packageNameLabel->setText(m_info.getInfo(RPMInfo::RPMINFO_KEY::name));
     ui->summaryLabel->setText(m_info.getInfo(RPMInfo::RPMINFO_KEY::summary));
