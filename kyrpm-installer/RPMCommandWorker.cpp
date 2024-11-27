@@ -19,6 +19,8 @@
 #include "RPMCommandWorker.h"
 #include <QDebug>
 
+const QString RPMCommandWorker::action_string[] = {"install", "uninstall", "reinstall"};
+
 RPMCommandWorker::RPMCommandWorker(QObject *parent) : QThread(parent)
 {
     init();
@@ -35,17 +37,17 @@ void RPMCommandWorker::stop()
     this->wait();
 }
 
-void RPMCommandWorker::setOptions(const QString arguments, bool isInstall)
+void RPMCommandWorker::setOptions(const QString arguments, ACTION_TYPE action)
 {
     m_arguments << arguments;
-    installOrUninstall = isInstall;
+    m_action = action;
     result = "";
 }
 
-void RPMCommandWorker::setOptions(const QStringList arguments, bool isInstall)
+void RPMCommandWorker::setOptions(const QStringList arguments, ACTION_TYPE action)
 {
     m_arguments = arguments;
-    installOrUninstall = isInstall;
+    m_action = action;
     result = "";
 }
 
@@ -61,19 +63,13 @@ void RPMCommandWorker::run()
     }
     //temp use command instead of rpm library
     QProcess  process;
-    if (installOrUninstall)
-    {
-        process.start(QString(KYRPM_YUMPATH) + " -y install " + m_arguments.at(0));
-    }
-    else
-    {
-        process.start(QString(KYRPM_YUMPATH) + " -y remove " + m_arguments.at(0));
-    }
+    QString command = QString(KYRPM_YUMPATH) + " -y " + action_string[int(m_action)] + " " + m_arguments[0];
+    process.start(command);
 
     //wait process start
     if (!process.waitForStarted())
     {
-        qDebug()<<"process start failed!";
+        qDebug()<<"process start failed!"<<command;
         qDebug()<<process.error();
         return;
     }

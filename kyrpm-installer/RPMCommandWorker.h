@@ -27,13 +27,19 @@ class RPMCommandWorker : public QThread
 {
     Q_OBJECT
 public:
+    enum class ACTION_TYPE{
+        install,
+        uninstall,
+        reinstall
+    };
+    static const QString action_string[];
     explicit RPMCommandWorker(QObject *parent = nullptr);
      ~RPMCommandWorker();
 
     void stop();
 
-    void setOptions(const QString m_arguments, bool isInstall);
-    void setOptions(const QStringList m_arguments, bool isInstall);
+    void setOptions(const QString m_arguments, ACTION_TYPE action);
+    void setOptions(const QStringList m_arguments, ACTION_TYPE action);
 
 
     QString getInfo();
@@ -42,7 +48,7 @@ protected:
 
     //command
     QStringList m_arguments;
-    bool installOrUninstall;
+    ACTION_TYPE m_action;
 
 private:
     void init();

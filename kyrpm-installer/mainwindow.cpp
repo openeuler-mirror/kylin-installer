@@ -107,7 +107,21 @@ bool MainWindow::dnfInstall()
         QMessageBox::information(nullptr, tr("Error"), tr("rpm file is not exist！") );
         return false;
     }
-
+    RPMInfo info;
+    GetRPMInfoBackend *backend = GetRPMInfoBackend::getInstance();
+    backend->getRPMInfoFromPackage(info, m_packagePath);
+    QString tmp, nvr;
+    nvr = info.getInfo(RPMInfo::RPMINFO_KEY::name) + "-" + info.getInfo(RPMInfo::RPMINFO_KEY::version) + "-" + info.getInfo(RPMInfo::RPMINFO_KEY::release);
+    int exitCode;
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_QI) + m_packagePath, tmp, nullptr, &exitCode);
+    RPMCommandWorker::ACTION_TYPE action = RPMCommandWorker::ACTION_TYPE::install;
+    if(exitCode == 0){
+        if(QMessageBox::question(nullptr, "question", "this package has been installed, reinstall it?", QMessageBox::Yes|QMessageBox::No)==QMessageBox::Yes){
+            action = RPMCommandWorker::ACTION_TYPE::reinstall;
+        }else{
+            return false;
+        }
+    }
     installMove = new QMovie(":/image/movie.gif");
     ui->move_label->setMovie(installMove);
     ui->move_label->show();
@@ -117,7 +131,7 @@ bool MainWindow::dnfInstall()
     ui->install_Btn->setEnabled(false);
     RPMCommandWorker *rpmWork = new RPMCommandWorker();
     connect(rpmWork,SIGNAL(cmdEnd(QString,int)),this,SLOT(installEnd(QString,int)));
-    rpmWork->setOptions(m_packagePath, true);
+    rpmWork->setOptions(m_packagePath, action);
     rpmWork->start();
     return true;
 }
@@ -133,7 +147,7 @@ bool MainWindow::dnfUninstall()
     ui->uninstall_Btn->setEnabled(false);
     RPMCommandWorker *rpmWork = new RPMCommandWorker();
     connect(rpmWork, SIGNAL(cmdEnd(QString,int)), this, SLOT(UninstallEnd(QString, int)));
-    rpmWork->setOptions(m_packagePath, false);
+    rpmWork->setOptions(m_packagePath, RPMCommandWorker::ACTION_TYPE::uninstall);
     rpmWork->start();
     return true;
 }
