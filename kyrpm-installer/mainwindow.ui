@@ -96,7 +96,7 @@
       <x>40</x>
       <y>10</y>
       <width>93</width>
-      <height>211</height>
+      <height>234</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -167,6 +167,19 @@
      </item>
     </layout>
    </widget>
+   <widget class="QLabel" name="move_label">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>110</y>
+      <width>40</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -174,7 +187,7 @@
      <x>0</x>
      <y>0</y>
      <width>532</width>
-     <height>23</height>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOptions">
