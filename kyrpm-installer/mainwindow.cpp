@@ -124,6 +124,12 @@ bool MainWindow::dnfInstall()
 
 bool MainWindow::dnfUninstall()
 {
+    uninstallMove = new QMovie(":/image/movie.gif");
+    ui->move_label->setMovie(uninstallMove);
+    ui->move_label->show();
+    uninstallMove->start();
+    ui->result_label->clear();
+
     ui->uninstall_Btn->setEnabled(false);
     RPMCommandWorker *rpmWork = new RPMCommandWorker();
     connect(rpmWork, SIGNAL(cmdEnd(QString,int)), this, SLOT(UninstallEnd(QString, int)));
@@ -260,6 +266,8 @@ void MainWindow::UninstallEnd(QString result,int exitCode)
     }
     ui->uninstall_Btn->setEnabled(true);
     m_resultList = result.split("\n");
+    uninstallMove->stop();
+    ui->move_label->hide();
 }
 
 void MainWindow::displayVersion(bool)
