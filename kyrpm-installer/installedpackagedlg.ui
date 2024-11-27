@@ -20,7 +20,7 @@
    <item row="0" column="1">
     <widget class="QPushButton" name="search_Btn">
      <property name="text">
-      <string>search</string>
+      <string>Search</string>
      </property>
     </widget>
    </item>
