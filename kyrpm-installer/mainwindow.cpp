@@ -145,7 +145,7 @@ void MainWindow::slotFileChoose(bool)
     m_packagePath = newPath;
 
     QFileInfo fileInfo(m_packagePath);
-    if(fileInfo.suffix() != "rpm")
+    if(fileInfo.suffix() != "rpm" && fileInfo.suffix() != "src.rpm")
     {
         QMessageBox::information(nullptr, tr("Error"), tr("the file is not rpm package！") );
         return ;

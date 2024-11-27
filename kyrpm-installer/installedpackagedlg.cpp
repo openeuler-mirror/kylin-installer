@@ -11,6 +11,7 @@ installedPackageDlg::installedPackageDlg(QWidget *parent) :
 {
     item = new QStringListModel(this);
     ui->setupUi(this);
+    ui->listView->setEditTriggers(QListView::NoEditTriggers);
 }
 
 installedPackageDlg::~installedPackageDlg()
