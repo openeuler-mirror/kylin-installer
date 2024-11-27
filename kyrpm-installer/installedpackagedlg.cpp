@@ -68,15 +68,23 @@ void installedPackageDlg::on_listView_clicked(const QModelIndex &index)
 
 void installedPackageDlg::searchRpm()
 {
+    QString tmp;
     if(ui->search_lineEdit->text().isEmpty())
     {
-        return ;
+        tmp = "-";
+    }else{
+        tmp = ui->search_lineEdit->text();
     }
     ui->listView->model()->removeRows(0,ui->listView->model()->rowCount());
-    QString tmp;
+
     QStringList lst;
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_INSTALLED_PACKAGE) + "|grep " + ui->search_lineEdit->text(), tmp, &lst);
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_INSTALLED_PACKAGE) + "|grep " + tmp, tmp, &lst);
     item->setStringList(lst);
     ui->listView->setModel(item);
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+}
+
+void installedPackageDlg::on_search_lineEdit_returnPressed()
+{
+    searchRpm();
 }
