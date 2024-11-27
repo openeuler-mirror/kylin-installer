@@ -29,7 +29,7 @@ class RPMCommandWorker : public QThread
 public:
     enum class ACTION_TYPE{
         install,
-        uninstall,
+        remove,
         reinstall
     };
     static const QString action_string[];

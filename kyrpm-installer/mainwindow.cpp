@@ -147,7 +147,7 @@ bool MainWindow::dnfUninstall()
     ui->uninstall_Btn->setEnabled(false);
     RPMCommandWorker *rpmWork = new RPMCommandWorker();
     connect(rpmWork, SIGNAL(cmdEnd(QString,int)), this, SLOT(UninstallEnd(QString, int)));
-    rpmWork->setOptions(m_packagePath, RPMCommandWorker::ACTION_TYPE::uninstall);
+    rpmWork->setOptions(m_packagePath, RPMCommandWorker::ACTION_TYPE::remove);
     rpmWork->start();
     return true;
 }
