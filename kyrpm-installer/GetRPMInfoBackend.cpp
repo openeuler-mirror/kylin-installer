@@ -66,7 +66,7 @@ bool GetRPMInfoBackend::getRPMInfoFromPackage(RPMInfo &info, QString strPath)
     });
 
     QStringList arguments;
-    arguments << "-qi" << TESTRPM;
+    arguments << "-qi" << strPath;
 
     m_process->start(KYRPM_RPMPATH,arguments);
     //wait process start
