@@ -22,6 +22,8 @@
 #include <QDebug>
 #include "RPMCommandWorker.h"
 #include "RpmDisplayDlg.h"
+#include <QSharedMemory>
+#include <QMessageBox>
 
 int main(int argc, char *argv[])
 {
@@ -35,10 +37,30 @@ int main(int argc, char *argv[])
 
     setenv("QT_QPA_PLATFORMTHEME" , "ukui" , true);
 
-    
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
 
-    return a.exec();
+    QApplication a(argc, argv);
+    QSharedMemory *shareMem = new QSharedMemory(QString("SingleInstanceIdentify"));
+    volatile short i = 2;
+    while (i--)
+    {
+        if (shareMem->attach(QSharedMemory::ReadOnly))
+        {
+            shareMem->detach();
+        }
+    }
+    if(shareMem->create(1)){
+        MainWindow w;
+        w.show();
+        a.exec();
+
+        if (shareMem->isAttached())
+            shareMem->detach();
+
+        delete shareMem;
+    }
+    else {
+        QMessageBox::information(nullptr, "info", "process already running");
+    }
+
+    return 0;
 }
