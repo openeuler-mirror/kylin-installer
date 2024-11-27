@@ -111,10 +111,10 @@ bool MainWindow::dnfInstall()
     RPMInfo info;
     GetRPMInfoBackend *backend = GetRPMInfoBackend::getInstance();
     backend->getRPMInfoFromPackage(info, m_packagePath);
-    QString tmp, nvr;
-    nvr = info.getInfo(RPMInfo::RPMINFO_KEY::name) + "-" + info.getInfo(RPMInfo::RPMINFO_KEY::version) + "-" + info.getInfo(RPMInfo::RPMINFO_KEY::release);
-    int exitCode;
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_QI) + m_packagePath, tmp, nullptr, &exitCode);
+    QString tmpAllInfo,tmp;
+    QStringList rpmNVSAllInfo,rpmNVS;
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_NVS) + m_packagePath, tmpAllInfo, &rpmNVSAllInfo, &exitCode);
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_QI) + rpmNVSAllInfo[0], tmp, &rpmNVS, &exitCode);
     RPMCommandWorker::ACTION_TYPE action = RPMCommandWorker::ACTION_TYPE::install;
     if(exitCode == 0){
         if(QMessageBox::question(nullptr, "question", "this package has been installed, reinstall it?", QMessageBox::Yes|QMessageBox::No)==QMessageBox::Yes){
