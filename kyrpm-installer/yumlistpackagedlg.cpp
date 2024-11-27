@@ -61,7 +61,10 @@ void yumlistPackageDlg::searchRpm()
 {
     QString tmp = ui->search_lineEdit->text();
     if(tmp.isEmpty())
+    {
+        getYumlistPackages();
         return;
+    }
 
     QStringList lst;
     for(int i=0; i<item->stringList().size(); i++)
@@ -94,4 +97,9 @@ void yumlistPackageDlg::on_buttonBox_accepted()
     }
     qInfo()<<"selected "<<item->stringList()[idx];
     emit selectYumListPackage(item->stringList()[idx]);
+}
+
+void yumlistPackageDlg::on_search_lineEdit_returnPressed()
+{
+    searchRpm();
 }

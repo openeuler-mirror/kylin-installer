@@ -44,6 +44,8 @@ public slots:
     void searchRpm();    
     void on_listView_clicked(const QModelIndex &index);
     void on_buttonBox_accepted();
+private slots:
+    void on_search_lineEdit_returnPressed();
 };
 
 #endif // YUMLISTPACKAGEDLG_H
