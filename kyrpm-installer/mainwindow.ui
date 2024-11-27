@@ -111,6 +111,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="uninstall_Btn">
+       <property name="text">
+        <string>Uninstall</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="install_Btn">
        <property name="text">
         <string>Install</string>
@@ -167,7 +174,7 @@
      <x>0</x>
      <y>0</y>
      <width>532</width>
-     <height>28</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOptions">
@@ -176,6 +183,7 @@
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionShowMessageLog"/>
+    <addaction name="actionSelect_installed_package"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -206,6 +214,11 @@
   <action name="actionShowMessageLog">
    <property name="text">
     <string>ShowMessageLog</string>
+   </property>
+  </action>
+  <action name="actionSelect_installed_package">
+   <property name="text">
+    <string>Select installed package</string>
    </property>
   </action>
  </widget>

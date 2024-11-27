@@ -26,6 +26,7 @@ SOURCES += \
     common.cpp \
     detaildlg.cpp \
     helpdlg.cpp \
+    installedpackagedlg.cpp \
     main.cpp \
     mainwindow.cpp \
     messagedlg.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     common.h \
     detaildlg.h \
     helpdlg.h \
+    installedpackagedlg.h \
     mainwindow.h \
     messagedlg.h \
     versiondlg.h
@@ -50,6 +52,7 @@ FORMS += \
     RpmDisplayWidget.ui \
     detaildlg.ui \
     helpdlg.ui \
+    installedpackagedlg.ui \
     mainwindow.ui \
     messagedlg.ui \
     versiondlg.ui
