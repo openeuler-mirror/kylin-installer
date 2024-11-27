@@ -195,8 +195,8 @@
      <string>Options</string>
     </property>
     <addaction name="actionOpen"/>
-    <addaction name="actionShowMessageLog"/>
     <addaction name="actionSelect_installed_package"/>
+    <addaction name="actionShowMessageLog"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -221,17 +221,17 @@
   </action>
   <action name="actionOpen">
    <property name="text">
-    <string>Open</string>
-   </property>
-  </action>
-  <action name="actionShowMessageLog">
-   <property name="text">
-    <string>ShowMessageLog</string>
+    <string>Open local package</string>
    </property>
   </action>
   <action name="actionSelect_installed_package">
    <property name="text">
     <string>Select installed package</string>
+   </property>
+  </action>
+  <action name="actionShowMessageLog">
+   <property name="text">
+    <string>ShowMessageLog</string>
    </property>
   </action>
  </widget>
