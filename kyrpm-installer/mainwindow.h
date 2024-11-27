@@ -78,6 +78,7 @@ private:
     detailDlg *detailWindow;
     MessageDlg *messageWindow;
     installedPackageDlg *installedWindow;
+    QMovie *installMove;
 
 
 protected:

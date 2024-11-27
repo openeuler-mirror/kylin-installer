@@ -24,6 +24,7 @@
 
 #include "RPMCommandWorker.h"
 #include "common.h"
+#include <QMovie>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -101,6 +102,12 @@ bool MainWindow::dnfInstall()
         QMessageBox::information(nullptr, tr("Error"), tr("rpm file is not exist！") );
         return false;
     }
+
+    installMove = new QMovie(":/image/movie.gif");
+    ui->move_label->setMovie(installMove);
+    ui->move_label->show();
+    installMove->start();
+    ui->result_label->clear();
 
     ui->install_Btn->setEnabled(false);
     RPMCommandWorker *rpmWork = new RPMCommandWorker();
@@ -218,13 +225,15 @@ void MainWindow::installEnd(QString result,int exitCode)
 {
     if(exitCode == 0)
     {
-        ui->result_label->setText("安装成功");
+        ui->result_label->setText("install success");
     }else
     {
-       ui->result_label->setText("安装失败");
+       ui->result_label->setText("install failed");
     }
     ui->install_Btn->setEnabled(true);
     m_resultList = result.split("\n");
+    installMove->stop();
+    ui->move_label->hide();
 }
 
 void MainWindow::displayVersion(bool)
