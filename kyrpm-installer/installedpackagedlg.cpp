@@ -29,6 +29,7 @@ installedPackageDlg::installedPackageDlg(QWidget *parent) :
     item = new QStringListModel(this);
     ui->setupUi(this);
     ui->listView->setEditTriggers(QListView::NoEditTriggers);
+    connect(ui->search_Btn,SIGNAL(clicked()), this, SLOT(searchRpm()));
 }
 
 installedPackageDlg::~installedPackageDlg()
@@ -63,4 +64,19 @@ void installedPackageDlg::on_listView_clicked(const QModelIndex &index)
     if(index.row()!=-1){
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
     }
+}
+
+void installedPackageDlg::searchRpm()
+{
+    if(ui->search_lineEdit->text().isEmpty())
+    {
+        return ;
+    }
+    ui->listView->model()->removeRows(0,ui->listView->model()->rowCount());
+    QString tmp;
+    QStringList lst;
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_INSTALLED_PACKAGE) + "|grep " + ui->search_lineEdit->text(), tmp, &lst);
+    item->setStringList(lst);
+    ui->listView->setModel(item);
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 }

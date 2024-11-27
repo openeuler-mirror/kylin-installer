@@ -40,6 +40,7 @@ private slots:
     void on_buttonBox_accepted();
 
     void on_listView_clicked(const QModelIndex &index);
+    void searchRpm();
 
 private:
     Ui::installedPackageDlg *ui;
