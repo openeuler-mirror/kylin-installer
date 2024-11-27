@@ -88,6 +88,7 @@ void MainWindow::initSignals()
     connect(ui->actionVersion, SIGNAL(triggered(bool)), this, SLOT(displayVersion(bool)));
     connect(ui->detail_Btn, SIGNAL(clicked()), this, SLOT(displayDetailInfo()));
     connect(ui->actionSelect_installed_package, SIGNAL(triggered(bool)), this, SLOT(displayInstalledPackage(bool)));
+    connect(ui->uninstall_Btn,SIGNAL(clicked()), this, SLOT(dnfUninstall()));
 }
 
 void MainWindow::selectInstalledPackage(QString pkgName)
@@ -116,7 +117,17 @@ bool MainWindow::dnfInstall()
     ui->install_Btn->setEnabled(false);
     RPMCommandWorker *rpmWork = new RPMCommandWorker();
     connect(rpmWork,SIGNAL(cmdEnd(QString,int)),this,SLOT(installEnd(QString,int)));
-    rpmWork->setOptions(m_packagePath);
+    rpmWork->setOptions(m_packagePath, true);
+    rpmWork->start();
+    return true;
+}
+
+bool MainWindow::dnfUninstall()
+{
+    ui->uninstall_Btn->setEnabled(false);
+    RPMCommandWorker *rpmWork = new RPMCommandWorker();
+    connect(rpmWork, SIGNAL(cmdEnd(QString,int)), this, SLOT(UninstallEnd(QString, int)));
+    rpmWork->setOptions(m_packagePath, false);
     rpmWork->start();
     return true;
 }
@@ -240,6 +251,17 @@ void MainWindow::installEnd(QString result,int exitCode)
     ui->move_label->hide();
 }
 
+void MainWindow::UninstallEnd(QString result,int exitCode)
+{
+    if(exitCode == 0){
+        ui->result_label->setText("uninstall success");
+    }else{
+       ui->result_label->setText("uninstall failed");
+    }
+    ui->uninstall_Btn->setEnabled(true);
+    m_resultList = result.split("\n");
+}
+
 void MainWindow::displayVersion(bool)
 {
     versionWindow->show();
@@ -285,21 +307,6 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     QMainWindow::closeEvent(event);
 }
 
-void MainWindow::on_uninstall_Btn_clicked()
-{
-    ui->uninstall_Btn->setEnabled(false);
-    QString rpm_e_output;
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(" -e ") + m_packagePath, rpm_e_output, NULL);
-    qInfo()<<rpm_e_output;
-    if(rpm_e_output == ""){
-        ui->result_label->setText("uninstall success");
-    }else{
-       ui->result_label->setText("uninstall failed");
-    }
-    ui->uninstall_Btn->setEnabled(true);
-    m_resultList = rpm_e_output.split("\n");
-}
-
 void MainWindow::on_web_Btn_clicked()
 {
     RPMInfo info;
@@ -309,4 +316,3 @@ void MainWindow::on_web_Btn_clicked()
     qDebug()<<"open url: "<<info.getInfo(RPMInfo::RPMINFO_KEY::URL);
     QDesktopServices::openUrl(QUrl(info.getInfo(RPMInfo::RPMINFO_KEY::URL)));
 }
-
