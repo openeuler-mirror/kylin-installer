@@ -21,16 +21,16 @@ bool DataProcess::QStringToRPMInfo(QString &str, RPMInfo &info)
     info.clear();
     //todo
     QStringList RPMInfoList = str.split("\n");
+    QRegExp rx("^([^:]*):(.*)$");
     for(auto i : RPMInfoList) {
         static bool is_desc = false;
         if(is_desc){
-            auto e = info.getInfo(RPMInfo::RPMINFO_KEY::description);
+            auto e = info.getInfo(RPMInfo::RPMINFO_KEY::description).trimmed() + " ";
             info.setInfo(RPMInfo::RPMINFO_KEY::description, e + i);
             continue;
         }
-        QRegExp rx("^(.*):(.*)$");
-        if(rx.indexIn(i) != -1){
-            qDebug()<<"error rpminfo string";
+        if(rx.indexIn(i) == -1){
+            qDebug()<<"error rpminfo string: "<<i;
             info.clear();
             return false;
         }
@@ -41,7 +41,6 @@ bool DataProcess::QStringToRPMInfo(QString &str, RPMInfo &info)
             continue;
         }
         if(!info.setInfo(key, value)){
-            qDebug()<<"error rpminfo key string";
             info.clear();
             return false;
         }

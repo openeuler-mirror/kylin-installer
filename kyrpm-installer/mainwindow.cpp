@@ -19,12 +19,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
+#include <QDesktopServices>
 #include <QFileDialog>
 #include <QMessageBox>
 
 #include "RPMCommandWorker.h"
 #include "common.h"
 #include <QMovie>
+#include "GetRPMInfoBackend.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -296,5 +298,15 @@ void MainWindow::on_uninstall_Btn_clicked()
     }
     ui->uninstall_Btn->setEnabled(true);
     m_resultList = rpm_e_output.split("\n");
-
 }
+
+void MainWindow::on_web_Btn_clicked()
+{
+    RPMInfo info;
+    GetRPMInfoBackend *backend = GetRPMInfoBackend::getInstance();
+    info.clear();
+    backend->getRPMInfoFromPackage(info, m_packagePath);
+    qDebug()<<"open url: "<<info.getInfo(RPMInfo::RPMINFO_KEY::URL);
+    QDesktopServices::openUrl(QUrl(info.getInfo(RPMInfo::RPMINFO_KEY::URL)));
+}
+

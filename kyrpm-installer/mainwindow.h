@@ -87,5 +87,6 @@ protected:
 private slots:
     void installEnd(QString result,int exitCode);
     void on_uninstall_Btn_clicked();
+    void on_web_Btn_clicked();
 };
 #endif // MAINWINDOW_H
