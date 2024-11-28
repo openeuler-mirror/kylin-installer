@@ -88,6 +88,7 @@ void MainWindow::initSignals()
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(slotFileChoose(bool)));
     connect(ui->actionYum_list, SIGNAL(triggered(bool)), this, SLOT(getyumlists(bool)));
     connect(ui->actionVersion, SIGNAL(triggered(bool)), this, SLOT(displayVersion(bool)));
+    connect(ui->web_Btn, SIGNAL(clicked()), this, SLOT(on_web_Btn_clicked()));
     connect(ui->detail_Btn, SIGNAL(clicked()), this, SLOT(displayDetailInfo()));
     connect(ui->actionSelect_installed_package, SIGNAL(triggered(bool)), this, SLOT(displayInstalledPackage(bool)));
     connect(ui->uninstall_Btn,SIGNAL(clicked()), this, SLOT(dnfUninstall()));

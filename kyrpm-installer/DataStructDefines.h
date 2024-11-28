@@ -103,6 +103,7 @@ struct RPMInfo
         sourceRPM,
         buildDate,
         buildHost,
+        vendor,
         packager,
         URL,
         summary,
