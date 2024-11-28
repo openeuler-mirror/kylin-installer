@@ -88,6 +88,7 @@ void MainWindow::initSignals()
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(slotFileChoose(bool)));
     connect(ui->actionYum_list, SIGNAL(triggered(bool)), this, SLOT(getyumlists(bool)));
     connect(ui->actionVersion, SIGNAL(triggered(bool)), this, SLOT(displayVersion(bool)));
+    connect(ui->web_Btn, SIGNAL(clicked()), this, SLOT(on_web_Btn_clicked()));
     connect(ui->detail_Btn, SIGNAL(clicked()), this, SLOT(displayDetailInfo()));
     connect(ui->actionSelect_installed_package, SIGNAL(triggered(bool)), this, SLOT(displayInstalledPackage(bool)));
     connect(ui->uninstall_Btn,SIGNAL(clicked()), this, SLOT(dnfUninstall()));
@@ -181,7 +182,8 @@ void MainWindow::slotFileChoose(bool)
     }
 
     QString rpmArch,osArch;
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_ARCH) + m_packagePath, rpmArch);
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_ARCH) + m_packagePath
+                                + QString(" 2> /dev/null"), rpmArch);
     Common::getTerminalOutput("arch", osArch, nullptr);
     osArch = osArch.trimmed();
     qInfo()<<rpmArch<<osArch;
@@ -208,8 +210,10 @@ void MainWindow::displayPackageInfo(QString packagePath)
 {
     QString rpmDescription;
     QStringList rpmNVS;
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_NVS) + packagePath, rpmDescription, &rpmNVS);
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_DESCRIPTION) + packagePath, rpmDescription);
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_NVS) + packagePath
+                                + QString(" 2> /dev/null"), rpmDescription, &rpmNVS);
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_DESCRIPTION) + packagePath
+                                + QString(" 2> /dev/null"), rpmDescription);
 
     ui->packageName_Label->setText(rpmNVS[0]);
     ui->version_Label->setText(rpmNVS[1]);

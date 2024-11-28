@@ -20,7 +20,7 @@
 
 const QString RPMInfo::rpminfo_key_Qstring[] = {
         "Name", "Epoch", "Version", "Release", "Architecture", "Install Date", "Group", "Size",
-        "License", "Signature", "Source RPM", "Build Date", "Build Host", "Packager",
+        "License", "Signature", "Source RPM", "Build Date", "Build Host", "Vendor", "Packager",
         "URL", "Summary", "Description", ""
 };
 
