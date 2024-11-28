@@ -30,7 +30,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     messagedlg.cpp \
-    versiondlg.cpp
+    versiondlg.cpp \
+    yumlistpackagedlg.cpp
 
 HEADERS += \
     DataProcess.h \
@@ -45,7 +46,8 @@ HEADERS += \
     installedpackagedlg.h \
     mainwindow.h \
     messagedlg.h \
-    versiondlg.h
+    versiondlg.h \
+    yumlistpackagedlg.h
 
 FORMS += \
     RpmDisplayDlg.ui \
@@ -55,7 +57,8 @@ FORMS += \
     installedpackagedlg.ui \
     mainwindow.ui \
     messagedlg.ui \
-    versiondlg.ui
+    versiondlg.ui \
+    yumlistpackagedlg.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

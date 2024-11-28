@@ -30,6 +30,7 @@
 #include "versiondlg.h"
 #include "messagedlg.h"
 #include "installedpackagedlg.h"
+#include "yumlistpackagedlg.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -83,6 +84,7 @@ private:
     detailDlg *detailWindow;
     MessageDlg *messageWindow;
     installedPackageDlg *installedWindow;
+    yumlistPackageDlg*   yumlistWindow;
     QMovie *installMove;
     QMovie *uninstallMove;
 

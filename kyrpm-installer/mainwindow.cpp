@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     detailWindow = new detailDlg();
     messageWindow = new MessageDlg();
     installedWindow = new installedPackageDlg();
+    yumlistWindow = new yumlistPackageDlg();
     //ui->textEdit->hide();
     this->setWindowTitle("rpm installer");
 
@@ -196,11 +197,11 @@ void MainWindow::slotFileChoose(bool)
 
 void MainWindow::getyumlists(bool)
 {
-    installedWindow->setWindowTitle("Installed Packages List, select one to uninstall");
-    installedWindow->getPackages();
-    installedWindow->show();
-    installedWindow->activateWindow();
-    connect(installedWindow, SIGNAL(selectInstalledPackage(QString)), this, SLOT(selectInstalledPackage(QString)));
+    yumlistWindow->setWindowTitle("yum Packages List, select one to install or update");
+    //yumlistWindow->getPackages();
+    yumlistWindow->show();
+    //yumlistWindow->activateWindow();
+    //connect(yumlistWindow, SIGNAL(selectInstalledPackage(QString)), this, SLOT(selectInstalledPackage(QString)));
 }
 
 void MainWindow::displayPackageInfo(QString packagePath)
