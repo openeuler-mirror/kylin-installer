@@ -48,7 +48,6 @@ void installedPackageDlg::getPackages()
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 }
 
-
 void installedPackageDlg::on_buttonBox_accepted()
 {
     int idx = ui->listView->currentIndex().row();

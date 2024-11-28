@@ -34,13 +34,14 @@ public:
     explicit yumlistPackageDlg(QWidget *parent = nullptr);
     ~yumlistPackageDlg();
     
-    bool  getYumlistPackages();   
+    bool  getYumlistPackages();
 private:
     Ui::yumlistPackageDlg *ui;
     QStringListModel *item;
 
 public slots:
     void searchRpm();    
+    void on_listView_clicked(const QModelIndex &index);
 };
 
 #endif // YUMLISTPACKAGEDLG_H

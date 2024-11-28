@@ -63,16 +63,24 @@ void yumlistPackageDlg::searchRpm()
     if(tmp.isEmpty())
         return;
 
-    QStringList getLst = item->stringList();
     QStringList lst;
-    for(int i=0; i<getLst.size(); i++)
+    for(int i=0; i<item->stringList().size(); i++)
     {
-        if(getLst[i].contains(tmp))
-            lst.append(getLst[i]);
+        if(item->stringList()[i].contains(tmp))
+            lst.append(item->stringList()[i]);
     }
 
     if(lst.size())
+    {
         item->setStringList(lst);
-    ui->listView->setModel(item);
-    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+        ui->listView->setModel(item);
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+    }
+}
+
+void yumlistPackageDlg::on_listView_clicked(const QModelIndex &index)
+{
+    if(index.row()!=-1){
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
+    }
 }
