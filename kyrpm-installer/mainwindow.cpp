@@ -113,6 +113,7 @@ bool MainWindow::dnfInstall()
     backend->getRPMInfoFromPackage(info, m_packagePath);
     QString tmpAllInfo,tmp;
     QStringList rpmNVSAllInfo,rpmNVS;
+    int exitCode;
     Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_NVS) + m_packagePath, tmpAllInfo, &rpmNVSAllInfo, &exitCode);
     Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_QI) + rpmNVSAllInfo[0], tmp, &rpmNVS, &exitCode);
     RPMCommandWorker::ACTION_TYPE action = RPMCommandWorker::ACTION_TYPE::install;
@@ -164,13 +165,12 @@ void MainWindow::slotFileChoose(bool)
         return;
     }
 
-    QString newPath = path.at(0);
-    if(newPath.isEmpty()) {
+    if(path.at(0).isEmpty()) {
         QMessageBox::information(nullptr, tr("Error"), tr("Please check again!") );
         return;
     }
 
-    m_packagePath = newPath;
+    m_packagePath = path.at(0);
 
     QFileInfo fileInfo(m_packagePath);
     if(fileInfo.suffix() != "rpm" && fileInfo.suffix() != "src.rpm")
