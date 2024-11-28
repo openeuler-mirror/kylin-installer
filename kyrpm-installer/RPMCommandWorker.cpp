@@ -19,7 +19,7 @@
 #include "RPMCommandWorker.h"
 #include <QDebug>
 
-const QString RPMCommandWorker::action_string[] = {"install", "uninstall", "reinstall"};
+const QString RPMCommandWorker::action_string[] = {"install", "remove", "reinstall"};
 
 RPMCommandWorker::RPMCommandWorker(QObject *parent) : QThread(parent)
 {
