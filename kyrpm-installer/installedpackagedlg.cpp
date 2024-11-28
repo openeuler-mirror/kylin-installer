@@ -30,6 +30,7 @@ installedPackageDlg::installedPackageDlg(QWidget *parent) :
     ui->setupUi(this);
     ui->listView->setEditTriggers(QListView::NoEditTriggers);
     connect(ui->search_Btn,SIGNAL(clicked()), this, SLOT(searchRpm()));
+    ui->search_lineEdit->setPlaceholderText(tr("input package name..."));
 }
 
 installedPackageDlg::~installedPackageDlg()
