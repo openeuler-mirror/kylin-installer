@@ -17,6 +17,7 @@
  */
 #include "yumlistpackagedlg.h"
 #include "ui_yumlistpackagedlg.h"
+#include "DataStructDefines.h"
 #include "common.h"
 #include <QDebug>
 #include <QPushButton>
@@ -37,3 +38,26 @@ yumlistPackageDlg::~yumlistPackageDlg()
     delete ui;
 }
 
+bool yumlistPackageDlg::getYumlistPackages()
+{
+    bool ret = true;
+    QString tmp;
+    QStringList lst;
+    Common::getTerminalOutput(QString(KYRPM_YUMPATH) + QString(KYRPM_YUM_LIST) + "|sort | tail -n +4", tmp, &lst);
+    for(int i=0; i<lst.size(); i++)
+    {
+        QStringList strlist = lst[i].simplified().split(" ");
+        QString rpm = 
+        lst[i] = strlist[0].split(".")[0] + "-" + strlist[1] + "." + strlist[0].split(".")[1];
+    }
+    item->setStringList(lst);
+    ui->listView->setModel(item);
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+
+    return ret;
+}
+
+void yumlistPackageDlg::searchRpm()
+{
+
+}
