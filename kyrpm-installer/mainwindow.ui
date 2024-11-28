@@ -48,6 +48,16 @@
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="move_label">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QLabel" name="result_label">
         <property name="enabled">
          <bool>true</bool>
@@ -205,13 +215,6 @@
        </widget>
       </item>
      </layout>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLabel" name="move_label">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>

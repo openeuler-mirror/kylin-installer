@@ -266,7 +266,7 @@ void MainWindow::installEnd(QString result,int exitCode)
     {
         ui->result_label->setText("install success");
         ui->install_Btn->setEnabled(false);
-        ui->uninstall_Btn->setEnabled(true);
+        ui->uninstall_Btn->setEnabled(false);
     }else
     {
        ui->result_label->setText("install failed");
@@ -282,7 +282,7 @@ void MainWindow::UninstallEnd(QString result,int exitCode)
 {
     if(exitCode == 0){
         ui->result_label->setText("uninstall success");
-        ui->install_Btn->setEnabled(true);
+        ui->install_Btn->setEnabled(false);
         ui->uninstall_Btn->setEnabled(false);
     }else
     {
