@@ -114,8 +114,10 @@ bool MainWindow::dnfInstall()
     QString tmpAllInfo,tmp;
     QStringList rpmNVSAllInfo,rpmNVS;
     int exitCode;
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_NVS) + m_packagePath, tmpAllInfo, &rpmNVSAllInfo, &exitCode);
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_QI) + rpmNVSAllInfo[0], tmp, &rpmNVS, &exitCode);
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_NVS) + m_packagePath
+                                + QString(" 2> /dev/null"), tmpAllInfo, &rpmNVSAllInfo, &exitCode);
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + QString(RPM_QI) + rpmNVSAllInfo[0]
+                                + QString(" 2> /dev/null"), tmp, &rpmNVS, &exitCode);
     RPMCommandWorker::ACTION_TYPE action = RPMCommandWorker::ACTION_TYPE::install;
     if(exitCode == 0){
         if(QMessageBox::question(nullptr, "question", "this package has been installed, reinstall it?", QMessageBox::Yes|QMessageBox::No)==QMessageBox::Yes){
