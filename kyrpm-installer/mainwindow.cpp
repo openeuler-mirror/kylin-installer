@@ -198,7 +198,7 @@ void MainWindow::slotFileChoose(bool)
 void MainWindow::getyumlists(bool)
 {
     yumlistWindow->setWindowTitle("yum Packages List, select one to install or update");
-    //yumlistWindow->getPackages();
+    yumlistWindow->getYumlistPackages();
     yumlistWindow->show();
     //yumlistWindow->activateWindow();
     //connect(yumlistWindow, SIGNAL(selectInstalledPackage(QString)), this, SLOT(selectInstalledPackage(QString)));

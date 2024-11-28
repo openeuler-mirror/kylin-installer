@@ -33,9 +33,14 @@ class yumlistPackageDlg: public QDialog
 public:
     explicit yumlistPackageDlg(QWidget *parent = nullptr);
     ~yumlistPackageDlg();
+    
+    bool  getYumlistPackages();   
 private:
     Ui::yumlistPackageDlg *ui;
-    QStringListModel *item;    
+    QStringListModel *item;
+
+public slots:
+    void searchRpm();    
 };
 
 #endif // YUMLISTPACKAGEDLG_H
