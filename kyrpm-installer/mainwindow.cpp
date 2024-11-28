@@ -340,14 +340,28 @@ void MainWindow::displayYumListPackage(QString package)
 
         if(tmp.contains("Summary"))
         {
-            ui->summary_textEdit->setText(tmp.split(":")[1].trimmed());
+            QString strSummary;
+            int j=i;
+            for(; j<resultList.size(); j++)
+            {
+                strSummary += resultList[j].split(":")[1].trimmed()+" ";
+                if(resultList[j+1].split(":")[0].trimmed().size()>0)
+                    break;
+            }
+            j = i;
+            ui->summary_textEdit->setText(strSummary);
             continue;
         }
 
         if(tmp.contains("Description"))
         {
-            ui->description_textEdit->setText(tmp.split(":")[1].trimmed());
-            continue;
+            QString strDescription;
+            for(int j=i; j<resultList.size(); j++)
+            {
+                strDescription += resultList[j].split(":")[1].trimmed()+" ";
+            }
+            ui->description_textEdit->setText(strDescription);
+            break;
         }
     }  
     showUI();
