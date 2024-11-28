@@ -61,7 +61,7 @@ bool GetRPMInfoBackend::getRPMInfoFromPackage(RPMInfo &info, QString strPath)
     });
     connect(m_process,&QProcess::readyReadStandardError,this, [=](){
         QString error = m_process->readAllStandardError();
-        qDebug()<<"excute cmd error: " << error;
+        qDebug()<<"execute cmd error: " << error;
 
     });
 
