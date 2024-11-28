@@ -255,11 +255,14 @@ void MainWindow::installEnd(QString result,int exitCode)
     if(exitCode == 0)
     {
         ui->result_label->setText("install success");
+        ui->install_Btn->setEnabled(false);
+        ui->uninstall_Btn->setEnabled(true);
     }else
     {
        ui->result_label->setText("install failed");
+       ui->install_Btn->setEnabled(true);
+       ui->uninstall_Btn->setEnabled(false);
     }
-    ui->install_Btn->setEnabled(true);
     m_resultList = result.split("\n");
     installMove->stop();
     ui->move_label->hide();
@@ -269,10 +272,14 @@ void MainWindow::UninstallEnd(QString result,int exitCode)
 {
     if(exitCode == 0){
         ui->result_label->setText("uninstall success");
-    }else{
-       ui->result_label->setText("uninstall failed");
+        ui->install_Btn->setEnabled(true);
+        ui->uninstall_Btn->setEnabled(false);
+    }else
+    {
+        ui->result_label->setText("uninstall failed");
+        ui->install_Btn->setEnabled(false);
+        ui->uninstall_Btn->setEnabled(true);
     }
-    ui->uninstall_Btn->setEnabled(true);
     m_resultList = result.split("\n");
     uninstallMove->stop();
     ui->move_label->hide();
