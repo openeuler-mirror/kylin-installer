@@ -85,6 +85,7 @@ void MainWindow::initSignals()
     connect(ui->install_Btn,SIGNAL(clicked()), this, SLOT(dnfInstall()));
     connect(ui->actionhelp,SIGNAL(triggered(bool)), this, SLOT(help(bool)));
     connect(ui->actionOpen, SIGNAL(triggered(bool)), this, SLOT(slotFileChoose(bool)));
+    connect(ui->actionYum_list, SIGNAL(triggered(bool)), this, SLOT(getyumlists(bool)));
     connect(ui->actionVersion, SIGNAL(triggered(bool)), this, SLOT(displayVersion(bool)));
     connect(ui->detail_Btn, SIGNAL(clicked()), this, SLOT(displayDetailInfo()));
     connect(ui->actionSelect_installed_package, SIGNAL(triggered(bool)), this, SLOT(displayInstalledPackage(bool)));
@@ -191,6 +192,15 @@ void MainWindow::slotFileChoose(bool)
     ui->uninstall_Btn->setEnabled(false);
     ui->install_Btn->setEnabled(true);
     displayPackageInfo(m_packagePath);
+}
+
+void MainWindow::getyumlists(bool)
+{
+    installedWindow->setWindowTitle("Installed Packages List, select one to uninstall");
+    installedWindow->getPackages();
+    installedWindow->show();
+    installedWindow->activateWindow();
+    connect(installedWindow, SIGNAL(selectInstalledPackage(QString)), this, SLOT(selectInstalledPackage(QString)));
 }
 
 void MainWindow::displayPackageInfo(QString packagePath)

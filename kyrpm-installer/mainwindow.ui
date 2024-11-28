@@ -231,6 +231,7 @@
     <addaction name="actionOpen"/>
     <addaction name="actionSelect_installed_package"/>
     <addaction name="actionShowMessageLog"/>
+    <addaction name="actionYum_list"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -265,7 +266,12 @@
   </action>
   <action name="actionShowMessageLog">
    <property name="text">
-    <string>ShowMessageLog</string>
+    <string>Show Message Log</string>
+   </property>
+  </action>
+  <action name="actionYum_list">
+   <property name="text">
+    <string>Get yum packages</string>
    </property>
   </action>
  </widget>
