@@ -59,5 +59,20 @@ bool yumlistPackageDlg::getYumlistPackages()
 
 void yumlistPackageDlg::searchRpm()
 {
+    QString tmp = ui->search_lineEdit->text();
+    if(tmp.isEmpty())
+        return;
 
+    QStringList getLst = item->stringList();
+    QStringList lst;
+    for(int i=0; i<getLst.size(); i++)
+    {
+        if(getLst[i].contains(tmp))
+            lst.append(getLst[i]);
+    }
+
+    if(lst.size())
+        item->setStringList(lst);
+    ui->listView->setModel(item);
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 }
