@@ -24,6 +24,7 @@
 #include "RpmDisplayDlg.h"
 #include <QSharedMemory>
 #include <QMessageBox>
+#include <unistd.h>
 
 int main(int argc, char *argv[])
 {
@@ -39,6 +40,13 @@ int main(int argc, char *argv[])
 
 
     QApplication a(argc, argv);
+    if (getuid() != 0)
+    {
+        QMessageBox::critical(nullptr, "Permission error",
+                              "Programs must be run with root privileges!");
+        return -1;
+    }
+
     QSharedMemory *shareMem = new QSharedMemory(QString("SingleInstanceIdentify"));
     volatile short i = 2;
     while (i--)
