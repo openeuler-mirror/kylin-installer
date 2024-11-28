@@ -38,10 +38,12 @@ public:
 private:
     Ui::yumlistPackageDlg *ui;
     QStringListModel *item;
-
+signals:
+    void selectYumListPackage(QString);
 public slots:
     void searchRpm();    
     void on_listView_clicked(const QModelIndex &index);
+    void on_buttonBox_accepted();
 };
 
 #endif // YUMLISTPACKAGEDLG_H

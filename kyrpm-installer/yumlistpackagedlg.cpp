@@ -84,3 +84,14 @@ void yumlistPackageDlg::on_listView_clicked(const QModelIndex &index)
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
     }
 }
+
+void yumlistPackageDlg::on_buttonBox_accepted()
+{
+    int idx = ui->listView->currentIndex().row();
+    if(idx == -1){
+        qInfo()<<"select error!";
+        return;
+    }
+    qInfo()<<"selected "<<item->stringList()[idx];
+    emit selectYumListPackage(item->stringList()[idx]);
+}
