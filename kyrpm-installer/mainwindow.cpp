@@ -102,6 +102,14 @@ void MainWindow::selectInstalledPackage(QString pkgName)
     displayPackageInfo(m_packagePath);
 }
 
+void MainWindow::selectYumListPackage(QString pkgName)
+{
+    m_packagePath = pkgName;
+    ui->install_Btn->setEnabled(false);
+    ui->uninstall_Btn->setEnabled(true);
+    displayYumListPackage(m_packagePath);
+}
+
 bool MainWindow::dnfInstall()
 {
     QFile packageFilePath(m_packagePath);
@@ -204,8 +212,8 @@ void MainWindow::getyumlists(bool)
     yumlistWindow->setWindowTitle("yum Packages List, select one to install or update");
     yumlistWindow->getYumlistPackages();
     yumlistWindow->show();
-    //yumlistWindow->activateWindow();
-    //connect(yumlistWindow, SIGNAL(selectInstalledPackage(QString)), this, SLOT(selectInstalledPackage(QString)));
+    yumlistWindow->activateWindow();
+    connect(yumlistWindow, SIGNAL(selectYumListPackage(QString)), this, SLOT(selectYumListPackage(QString)));
 }
 
 void MainWindow::displayPackageInfo(QString packagePath)
@@ -301,6 +309,16 @@ void MainWindow::UninstallEnd(QString result,int exitCode)
     uninstallMove->stop();
     ui->move_label->hide();
 }
+
+void MainWindow::displayYumListPackage(QString package)
+{
+    package = "44";
+    ui->packageName_Label->setText("11");
+    ui->version_Label->setText("22");
+    ui->summary_textEdit->setText("33");
+    ui->description_textEdit->setText(package);
+    showUI();
+}    
 
 void MainWindow::displayVersion(bool)
 {

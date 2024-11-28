@@ -57,6 +57,7 @@ private slots:
     void displayDetailInfo();
     void displayInstalledPackage(bool);
     void selectInstalledPackage(QString);
+    void selectYumListPackage(QString);
     bool dnfUninstall();
     void UninstallEnd(QString result,int exitCode);
     void on_web_Btn_clicked();
@@ -67,6 +68,7 @@ private:
     void hideUI();
     void showUI();
     void displayPackageInfo(QString packagePath);
+    void displayYumListPackage(QString package);
     QList<QTextEdit *> edt_list;
     QList<QLabel *> label_list;
     QList<QPushButton *> btn_list;
