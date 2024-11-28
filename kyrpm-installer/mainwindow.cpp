@@ -104,10 +104,10 @@ void MainWindow::selectInstalledPackage(QString pkgName)
 
 void MainWindow::selectYumListPackage(QString pkgName)
 {
-    m_packagePath = pkgName;
-    ui->install_Btn->setEnabled(false);
-    ui->uninstall_Btn->setEnabled(true);
-    displayYumListPackage(m_packagePath);
+    m_yumlistPackage = pkgName;
+    ui->install_Btn->setEnabled(true);
+    ui->uninstall_Btn->setEnabled(false);
+    displayYumListPackage(m_yumlistPackage);
 }
 
 bool MainWindow::dnfInstall()
@@ -312,11 +312,44 @@ void MainWindow::UninstallEnd(QString result,int exitCode)
 
 void MainWindow::displayYumListPackage(QString package)
 {
-    package = "44";
-    ui->packageName_Label->setText("11");
-    ui->version_Label->setText("22");
-    ui->summary_textEdit->setText("33");
-    ui->description_textEdit->setText(package);
+    QString result;
+    QStringList resultList;
+    Common::getTerminalOutput(QString(KYRPM_YUMPATH) + KYRPM_YUM_INFO + package, result, &resultList);
+
+    QString rpmResult;
+    QString installedFlag = "(not install)";
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + RPM_QI + package, rpmResult, nullptr);
+
+    if(rpmResult.contains("Install Date"))
+        installedFlag = "(installed)";
+
+    for(int i=2; i<resultList.size(); i++)
+    {
+        QString tmp = resultList[i];
+        if(tmp.contains("Name"))
+        {
+            ui->packageName_Label->setText(tmp.split(":")[1].trimmed() + installedFlag);
+            continue;
+        }
+        
+        if(tmp.contains("Version"))
+        {
+            ui->version_Label->setText(tmp.split(":")[1].trimmed());
+            continue;
+        }
+
+        if(tmp.contains("Summary"))
+        {
+            ui->summary_textEdit->setText(tmp.split(":")[1].trimmed());
+            continue;
+        }
+
+        if(tmp.contains("Description"))
+        {
+            ui->description_textEdit->setText(tmp.split(":")[1].trimmed());
+            continue;
+        }
+    }  
     showUI();
 }    
 

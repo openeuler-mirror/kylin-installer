@@ -38,6 +38,7 @@
 
 #define KYRPM_YUMPATH "/usr/bin/yum"
 #define KYRPM_YUM_LIST " list --showduplicates"
+#define KYRPM_YUM_INFO " info "
 #define KYRPM_RPMBUILD	"rpm"
 #define TESTRPM "/Users/douyan/temp/kyrpm-installer/NetworkManager-1.32.12-14.oe2203sp1.src.rpm"
 #define VERSION "1.0-1"

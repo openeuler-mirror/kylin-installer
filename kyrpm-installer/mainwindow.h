@@ -80,6 +80,7 @@ private:
 
     QString m_packagePath;
     QStringList m_resultList;
+    QString m_yumlistPackage;
 
     HelpDlg *helpWindow;
     VersionDlg *versionWindow;
