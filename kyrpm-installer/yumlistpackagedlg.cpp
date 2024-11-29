@@ -115,3 +115,15 @@ void yumlistPackageDlg::on_search_lineEdit_returnPressed()
 {
     searchRpm();
 }
+
+void yumlistPackageDlg::on_listView_doubleClicked(const QModelIndex &index)
+{
+    on_buttonBox_accepted();
+    this->close();
+}
+
+
+void yumlistPackageDlg::on_buttonBox_clicked(QAbstractButton *button)
+{
+    this->close();
+}

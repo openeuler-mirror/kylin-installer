@@ -44,6 +44,8 @@ private slots:
 
     void on_search_lineEdit_returnPressed();
 
+    void on_listView_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::installedPackageDlg *ui;
     QStringListModel *item;
