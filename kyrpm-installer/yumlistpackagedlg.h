@@ -20,6 +20,7 @@
 
 #include <QDialog>
 #include <QStringListModel>
+#include <QAbstractButton>
 
 namespace Ui {
 class yumlistPackageDlg;
@@ -46,6 +47,8 @@ public slots:
     void on_buttonBox_accepted();
 private slots:
     void on_search_lineEdit_returnPressed();
+    void on_listView_doubleClicked(const QModelIndex &index);
+    void on_buttonBox_clicked(QAbstractButton *button);
 };
 
 #endif // YUMLISTPACKAGEDLG_H
