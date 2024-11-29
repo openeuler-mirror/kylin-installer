@@ -105,8 +105,6 @@ void MainWindow::selectInstalledPackage(QString pkgName)
 void MainWindow::selectYumListPackage(QString pkgName)
 {
     m_yumlistPackage = pkgName;
-    ui->install_Btn->setEnabled(true);
-    ui->uninstall_Btn->setEnabled(false);
     displayYumListPackage(m_yumlistPackage);
 }
 
@@ -312,29 +310,27 @@ void MainWindow::UninstallEnd(QString result,int exitCode)
 
 void MainWindow::displayYumListPackage(QString package)
 {
+    QString rpmName;
+    QString yumrpmVersionReleaseArch;
+    QString rpmVersionReleaseArch;
     QString result;
     QStringList resultList;
-    Common::getTerminalOutput(QString(KYRPM_YUMPATH) + KYRPM_YUM_INFO + package, result, &resultList);
-
-    QString rpmResult;
     QString installedFlag = "(not install)";
-    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + RPM_QI + package, rpmResult, nullptr);
-
-    if(rpmResult.contains("Install Date"))
-        installedFlag = "(installed)";
+    Common::getTerminalOutput(QString(KYRPM_YUMPATH) + KYRPM_YUM_INFO + package, result, &resultList);
 
     for(int i=2; i<resultList.size(); i++)
     {
         QString tmp = resultList[i];
         if(tmp.contains("Name"))
         {
-            ui->packageName_Label->setText(tmp.split(":")[1].trimmed() + installedFlag);
+            rpmName = tmp.split(":")[1].trimmed();
             continue;
         }
         
         if(tmp.contains("Version"))
         {
-            ui->version_Label->setText(tmp.split(":")[1].trimmed());
+            yumrpmVersionReleaseArch = tmp.split(":")[1].trimmed()+ "-" + resultList[i+1].split(":")[1].trimmed() + "." + resultList[i+2].split(":")[1].trimmed();
+            i += 2;
             continue;
         }
 
@@ -364,6 +360,36 @@ void MainWindow::displayYumListPackage(QString package)
             break;
         }
     }  
+
+    Common::getTerminalOutput(QString(KYRPM_RPMPATH) + RPM_QI + rpmName, result, &resultList);
+
+    for(int i=0; i<resultList.size(); i++)
+    {
+        if(resultList[i].contains("Version"))
+        {
+            rpmVersionReleaseArch = resultList[i].split(":")[1].trimmed()+ "-" + resultList[i+1].split(":")[1].trimmed() + "." + resultList[i+2].split(":")[1].trimmed();
+        }
+        else if(resultList[i].contains("Install Date"))
+        {
+            installedFlag = "(installed)";
+            break;
+        }
+    }
+
+    if((installedFlag == "(installed)") && (rpmVersionReleaseArch == yumrpmVersionReleaseArch))
+    {
+        ui->install_Btn->setEnabled(false);
+        ui->uninstall_Btn->setEnabled(true);
+    }
+    else if(installedFlag == "(installed)")
+    {
+        ui->install_Btn->setEnabled(true);
+        ui->uninstall_Btn->setEnabled(true);       
+    }
+
+    ui->packageName_Label->setText(rpmName + installedFlag);
+    ui->version_Label->setText(yumrpmVersionReleaseArch);
+
     showUI();
 }    
 
