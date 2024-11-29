@@ -43,13 +43,23 @@ bool yumlistPackageDlg::getYumlistPackages()
     bool ret = true;
     QString tmp;
     QStringList lst;
+    QList<int> rmvlst;
     Common::getTerminalOutput(QString(KYRPM_YUMPATH) + QString(KYRPM_YUM_LIST) + "|sort | tail -n +4", tmp, &lst);
     for(int i=0; i<lst.size(); i++)
     {
         QStringList strlist = lst[i].simplified().split(" ");
-        QString rpm = 
         lst[i] = strlist[0].split(".")[0] + "-" + strlist[1] + "." + strlist[0].split(".")[1];
+        if((i>=1) && (lst[i-1] == lst[i]))
+        {
+           rmvlst.append(i);
+        }
     }
+
+    for(int i=0; i<rmvlst.size(); i++)
+    {
+        lst.removeAt(rmvlst[i]);
+    }
+
     item->setStringList(lst);
     ui->listView->setModel(item);
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
