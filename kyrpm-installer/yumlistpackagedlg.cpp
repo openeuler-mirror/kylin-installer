@@ -48,6 +48,8 @@ bool yumlistPackageDlg::getYumlistPackages()
     for(int i=0; i<lst.size(); i++)
     {
         QStringList strlist = lst[i].simplified().split(" ");
+        if(strlist.size() != 3)
+            continue;
         lst[i] = strlist[0].split(".")[0] + "-" + strlist[1] + "." + strlist[0].split(".")[1];
         if((i>=1) && (lst[i-1] == lst[i]))
         {
